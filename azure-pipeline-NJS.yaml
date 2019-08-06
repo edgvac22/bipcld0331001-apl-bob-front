@@ -1,0 +1,40 @@
+variables:
+- group: artifactory-dev
+- group: fluid
+- name: sonarSources
+  value: 'controllers'
+- name: sonarJavascriptLcovReportPaths
+  value: 'coverage/lcov.info'
+- name: sonarExclusions
+  value: 'resources/*, test/*, index.js'
+- name: itsLibrary
+  value: 'false'
+- name: fluidInicialesProyecto
+  value: 'prt'
+
+resources:
+  repositories:
+    - repository: template
+      type: git
+      name: DevOps/_git/templates-yaml
+trigger:
+  - master
+  - develop
+   
+
+stages:
+- stage:
+  jobs:
+  - job:
+
+    pool:
+      name: Banistmo-Linux-Pool
+      demands: maven
+    steps:
+    - template: build_NJS.yml@template #ref en otro repository
+      parameters:
+        itslibrary: ${{variables.itsLibrary}}
+        fluidinicialesProyecto: ${{variables.fluidInicialesProyecto}}
+        sonarSources: ${{variables.sonarSources}}
+        sonarJavascriptLcovReportPaths: ${{variables.sonarJavascriptLcovReportPaths}}
+        sonarExclusions: ${{variables.sonarExclusions}}
