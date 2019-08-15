@@ -1,5 +1,5 @@
 variables:
-- group: Artifactory
+- group: artifactory-dev
 - group: fluid
 - name: sonarSources
   value: 'controllers'
