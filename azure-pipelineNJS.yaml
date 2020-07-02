@@ -1,40 +1,80 @@
 variables:
-- group: artifactory-dev
-- group: fluid
+# variable de grupo de artifactory
+- group: Artifactory  
+# variable de grupos de fluid
+- group: Fluid  
+
 - name: sonarSources
-  value: 'controllers'
-- name: sonarJavascriptLcovReportPaths
-  value: 'coverage/lcov.info'
+# Propiedad del sonarQube para indicar el directorio a analizar
+  value: 'src' 
 - name: sonarExclusions
-  value: 'resources/*, test/*, index.js'
-- name: itsLibrary
-  value: 'false'
-- name: fluidInicialesProyecto
-  value: 'prt'
+# propiedad de sonarQube para indicar los directorios a excluir en el análisis
+  value: 'node_modules/**' 
+- name: sonarCoveragePaths 
+# propiedad de sonarQube para indicar el directorio donde se encontrara el reporte de covertura
+  value: 'coverage/lcov.info' 
+- name: sonarCreateMaster
+# 1=proyecto nuevo en sonarQube y 0=para actualizar una rama nueva del proyecto existente en sonarQube
+  value: '1'  
+- name: sonarQubeServiceEndpoint 
+# Nombre del service connection para tarea de sonarQube
+  value: 'SonarLts' 
+- name: commandBuild
+# nombre del script de compilación
+  value: 'build'  
+- name: unitTestCommand
+# nombre del script de pruebas unitarias
+  value: 'test' 
+- name: appType
+# js= javascript y tsc= typescript
+  value: 'js' 
+- name: versionNode
+# versión que se descargará en el agente temporalmente, si no se agrega valor utiliza la versión por defecto del agente
+  value: '' 
+- name: idfluid
+# id de proyecto en fluid asserts
+  value: $(idPrt) 
+- name: secretfluid
+# secretKey de proyecto en fluid asserts
+  value: $(secretPrt)
+# variable para localizar package.json de projecto widget, de no ser el caso dejarla vacía
+- name: packageWorkingDir
+  value: ''
 
 resources:
   repositories:
     - repository: template
       type: git
       name: DevOps/_git/templates-yaml
+      ref: 'refs/heads/master' # indicamos la rama que apuntamos en el repositorios template-yaml, siempre debemos apuntar a master
 trigger:
   - master
   - develop
-   
+  - release
+  - release/*
 
+name: $(date:yyyyMMdd)$(rev:.r)
 stages:
 - stage:
   jobs:
   - job:
-
     pool:
       name: Banistmo-Linux-Pool
-      demands: maven
+    workspace:
+      clean: resources
     steps:
-    - template: build_NJS.yml@template #ref en otro repository
+    - template: build_NJS_LTS.yml@template #ref de template en otro repository
       parameters:
-        itslibrary: ${{variables.itsLibrary}}
-        fluidinicialesProyecto: ${{variables.fluidInicialesProyecto}}
-        sonarSources: ${{variables.sonarSources}}
-        sonarJavascriptLcovReportPaths: ${{variables.sonarJavascriptLcovReportPaths}}
+        sonarCoveragePaths: ${{variables.sonarCoveragePaths}}
         sonarExclusions: ${{variables.sonarExclusions}}
+        sonarSources: ${{variables.sonarSources}}
+        sonarCreateMaster: ${{variables.sonarCreateMaster}}
+        sonarQubeServiceEndpoint: ${{variables.sonarQubeServiceEndpoint}}
+        sonarQubeServiceEndpointGeneric: ${{variables.sonarQubeServiceEndpointGeneric}}        
+        commandBuild: ${{variables.commandBuild}}
+        unitTestCommand: ${{variables.unitTestCommand}}
+        appType: ${{variables.appType}}
+        versionNode: ${{variables.versionNode}}
+        idfluid: ${{variables.idfluid}}
+        secretfluid: ${{variables.secretfluid}}
+        versionNode: ${{variables.versionNode}}
