@@ -1,0 +1,15 @@
+table {
+    width: 100%;
+}
+
+.title {
+    margin: 35px 0 0 25px;
+    font-weight: 500;
+}
+
+#search-issue {
+    margin: 0 25px 15px 25px;
+}
+p {
+    margin-left: 25px;
+}

@@ -44,3 +44,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# package-lock
+package-lock.json
+
+# env
+.env
+
+# angular
+.angular

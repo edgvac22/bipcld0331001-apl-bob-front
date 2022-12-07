@@ -1,0 +1,9 @@
+.bc-background {
+    background-image: url('/assets/img/background/back-1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .bc-backheight {
+    height: 85vh;
+  }  

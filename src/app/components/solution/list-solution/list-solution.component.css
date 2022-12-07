@@ -1,0 +1,21 @@
+p {
+    margin-left: 25px;
+}
+
+table {
+    width: 100%;
+}
+
+#search-solution {
+    margin: 0 25px 15px 25px;
+}
+
+#icon {
+    text-decoration: none;
+    color: #2c2a29;
+}
+
+.title {
+    margin: 35px 0 0 25px;
+    font-weight: 500;
+}

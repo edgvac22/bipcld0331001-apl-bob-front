@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'bipcld0331000-apl-bob-fnt';
+  title = 'Base de Conocimiento Banistmo (B.O.B)';
 }

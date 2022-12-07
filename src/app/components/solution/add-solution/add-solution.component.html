@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+<div class="contain" *ngIf="dataSource">
+
+    <h1 class="space">Crear solución</h1>
+
+    <mat-form-field appearance="fill">
+        <input matInput placeholder=dataSource.issueId disabled>
+    </mat-form-field><br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Detalle del hallazgo</mat-label>
+        <textarea matInput disabled></textarea>
+    </mat-form-field>
+
+    <p><a href="#">Ver imagenes</a></p>
+
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="Área de TI" disabled>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="Ambiente" disabled>
+    </mat-form-field>
+
+    <br>
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="Usuario de la solución" required>
+    </mat-form-field>
+
+    <br>
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="Título de la solución" required>
+    </mat-form-field>
+
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Explicar solución</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+    <br>
+    <input type="file" name="Adjuntar archivo" id=""><br><br>
+
+    <a mat-raised-button color="primary" href="#">Crear solución</a>
+</div>

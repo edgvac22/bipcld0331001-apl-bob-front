@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+<h1 class="title">Soluciones realizadas</h1>
+<mat-form-field id="search-solution">
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar ahora" class="search-input" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+
+    <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+
+        <!-- SolutionId Column -->
+        <ng-container matColumnDef="solutionId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by issueId"> Id
+            </mat-header-cell>
+            <mat-cell *matCellDef="let solution"> <a href="#">{{solution.solutionId}}</a> </mat-cell>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title"> Título
+            </mat-header-cell>
+            <mat-cell *matCellDef="let solution"> {{solution.solutionTitle}}</mat-cell>
+        </ng-container>
+
+        <!-- Area Column -->
+        <ng-container matColumnDef="area">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by area"> Área de TI
+            </mat-header-cell>
+            <mat-cell *matCellDef="let solution"> {{solution.area}} </mat-cell>
+        </ng-container>
+
+        <!-- Environment Column -->
+        <ng-container matColumnDef="environment">
+            <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by environment"> Ambiente
+            </mat-header-cell>
+            <mat-cell *matCellDef="let solution"> {{solution.environment}} </mat-cell>
+        </ng-container>
+
+        <!-- Icons Column -->
+        <ng-container matColumnDef="icons">
+            <mat-header-cell *matHeaderCellDef> Editar / Eliminar </mat-header-cell>
+            <mat-cell *matCellDef="let solution">
+                <button mat-icon-button color="black" aria-label="Edit">
+                    <mat-icon>
+                        edit
+                    </mat-icon>
+                </button>
+
+                <button mat-icon-button color="black" aria-label="Delete">
+                    <mat-icon (click)="removeSolution(solution.issueId)">
+                        delete
+                    </mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5,10,15]" showFirstLastButtons
+        aria-label="Select page">
+    </mat-paginator>
+</div>
