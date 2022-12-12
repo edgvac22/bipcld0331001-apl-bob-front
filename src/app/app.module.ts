@@ -9,6 +9,7 @@ import { HomeComponent } from './components/landing-page/home/home.component';
 import { NavbarComponent } from './components/landing-page/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { UnauthorizedAccessComponent } from './components/main/unauthorized-access/unauthorized-access.component';
 import { IssueComponent } from './components/issue/issue.component';
@@ -17,7 +18,8 @@ import { ListIsueComponent } from './components/issue/list-isue/list-isue.compon
 import { MainComponent } from './components/main/main.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatTableModule } from '@angular/material/table'; 
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,6 +32,11 @@ import { TranslatePaginatorComponent } from './shared/translate-paginator/transl
 import { AddSolutionComponent } from './components/solution/add-solution/add-solution.component';
 import { UpdateSolutionComponent } from './components/solution/update-solution/update-solution.component';
 import { LoginComponent } from './components/landing-page/login/login.component';
+import { MsalGuard, MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
+import { environment } from 'src/environments/environment'
+import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
+
+const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 @NgModule({
   declarations: [
@@ -64,9 +71,32 @@ import { LoginComponent } from './components/landing-page/login/login.component'
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatDialogModule
+    MatListModule,
+    MatCardModule,
+    MatDialogModule,
+    MsalModule.forRoot(new PublicClientApplication({
+      auth: {
+        clientId: environment.config.clientId,
+        redirectUri: environment.config.redirectUri,
+        authority: environment.config.authority,
+      },
+      cache: {
+        cacheLocation: 'localStorage',
+        storeAuthStateInCookie: isIE,
+      }
+    }), {
+      interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+      authRequest: {
+        scopes: ['user.read']
+      }
+    }, {
+      interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration
+      protectedResourceMap: new Map([
+        ['https://graph.microsoft.com/v1.0/me', ['user.read']]
+      ])
+    })
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [MsalGuard],
+  bootstrap: [AppComponent, MsalRedirectComponent]
 })
 export class AppModule { }

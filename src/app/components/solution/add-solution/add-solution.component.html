@@ -1,25 +1,32 @@
-<app-navbar></app-navbar>
-<div class="contain" *ngIf="dataSource">
+<div id="content">
+    <h1>Crear Solución</h1>
 
-    <h1 class="space">Crear solución</h1>
-
-    <mat-form-field appearance="fill">
-        <input matInput placeholder=dataSource.issueId disabled>
-    </mat-form-field><br>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Detalle del hallazgo</mat-label>
-        <textarea matInput disabled></textarea>
+    <mat-form-field id="mat-form-field" appearance="fill" class="name">
+        <mat-label>Id del Hallazgo</mat-label>
+        <input matInput value="{{dataSource.issueId}}" readonly />
     </mat-form-field>
 
-    <p><a href="#">Ver imagenes</a></p>
-
     <mat-form-field appearance="fill">
-        <input matInput placeholder="Área de TI" disabled>
+        <mat-label>Área de TI</mat-label>
+        <input matInput readonly value="{{dataSource.area}}">
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
-        <input matInput placeholder="Ambiente" disabled>
+        <mat-label>Ambiente</mat-label>
+        <input matInput readonly value="{{dataSource.environment}}">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" id="mat-form-field" class="description">
+        <mat-label>Detalle del Hallazgo</mat-label>
+        <textarea matInput readonly value="{{dataSource.issueDetail}}"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" id="mat-form-field" class="file">
+        <mat-label>Ver adjuntos del Hallazgo</mat-label>
+        <button mat-icon-button matPrefix>
+            <mat-icon>attach_file</mat-icon>
+        </button>
+        <input type="text" readonly matInput disabled />
     </mat-form-field>
 
     <br>
@@ -34,11 +41,28 @@
 
     <br>
     <mat-form-field appearance="fill">
-        <mat-label>Explicar solución</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput placeholder="Detalle de solución" required></textarea>
     </mat-form-field>
-    <br>
-    <input type="file" name="Adjuntar archivo" id=""><br><br>
 
-    <a mat-raised-button color="primary" href="#">Crear solución</a>
+    <mat-form-field class="example-full-width" id="mat-form-field" class="file" (click)="fileInput.click()">
+        <mat-label>Subir adjuntos de la Solución</mat-label>
+        <button mat-icon-button matPrefix>
+            <mat-icon>attach_file</mat-icon>
+        </button>
+
+        <input type="text" readonly matInput disabled />
+        <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" />
+    </mat-form-field>
+
+    <div id="buttons">
+        <button mat-raised-button id="button" (click)="close()">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+
+        <button mat-raised-button id="button" class="button-login">
+            <mat-icon>add</mat-icon>
+            Crear solución
+        </button>
+    </div>
 </div>

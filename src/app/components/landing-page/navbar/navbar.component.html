@@ -1,7 +1,10 @@
 <mat-toolbar>
-    <span>BOB</span>
+    <a href="home"><img src="../../../../assets/img/logos/logo-banistmo.png" alt="Logo Banistmo"></a>
     <div class="spacer"></div>
     <a mat-button routerLink="/home">Inicio</a>
     <a mat-button routerLink="/issue/list">Hallazgo</a>
     <a mat-button routerLink="/solution/list">Solución</a>
+    <button mat-raised-button (click)="logout()">
+        <mat-icon>logout</mat-icon>Cerrar sesión
+    </button>
 </mat-toolbar>

@@ -1,11 +1,40 @@
+body {
+    background-color: #f4f4f4;
+}
+
 h1 {
     font-weight: 500;
+    font-size: 1.7em;
+    text-align: center;
 }
 
 .contain {
     margin-left: 25px;
+    margin-right: 25px;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+.mat-icon {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.mat-raised-button{
+    background-color: #2c2a29;
+    color: #ffffff;
+    margin-left: 10px;
+}
+
+.mat-raised-button:hover{
+  background-color: #FDDA24;
+  color: #2c2a29;
 }
 
 .space {
-    margin-top: 25px;
+    margin-top: 2%;
+    text-align: center;
+    margin-bottom: 25px;
 }

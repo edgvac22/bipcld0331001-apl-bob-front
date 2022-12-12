@@ -1,7 +1,7 @@
 <mat-toolbar id="navbar">
     <a href="#"><img src="../../../../assets/img/logos/logo-banistmo.png" alt="Logo Banistmo"></a>
     <div class="spacer"></div>
-    <button mat-raised-button>
+    <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">
         <mat-icon>person</mat-icon>Iniciar sesión
     </button>
 </mat-toolbar>
@@ -17,3 +17,7 @@
             Colaboradores.</p>
     </div>
 </body>
+<div class="container">
+    <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
+    <router-outlet *ngIf="!isIframe"></router-outlet>
+  </div>

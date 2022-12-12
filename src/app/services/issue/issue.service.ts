@@ -25,7 +25,6 @@ export class IssueService {
 
   getIssue(issueId: string) {
     const ENDPOINT = `${this.API}/issue/${issueId}`;
-    console.log(ENDPOINT);
     return this.http.get<Issue[]>(ENDPOINT)
       .pipe(map((response: any) => response.data.Item));
   }
