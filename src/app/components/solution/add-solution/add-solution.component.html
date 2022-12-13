@@ -29,20 +29,31 @@
         <input type="text" readonly matInput disabled />
     </mat-form-field>
 
+
+    <form [formGroup]="addSolutionForm" (ngSubmit)="addSolution()">
     <br>
     <mat-form-field appearance="fill">
-        <input matInput placeholder="Usuario de la solución" required>
+        <input matInput placeholder="Usuario de la solución" required formControlName="solutionUser">
     </mat-form-field>
+    <div *ngIf="addSolutionForm.get('solutionUser').errors" class="text-error">
+        Este campo es obligatorio.
+    </div>
 
     <br>
     <mat-form-field appearance="fill">
-        <input matInput placeholder="Título de la solución" required>
+        <input matInput placeholder="Título de la solución" required formControlName="solutionTitle">
     </mat-form-field>
+    <div *ngIf="addSolutionForm.get('solutionTitle').errors" class="text-error">
+        Este campo es obligatorio y debe ser mayor a 5 caracteres.
+    </div>
 
     <br>
     <mat-form-field appearance="fill">
-        <textarea matInput placeholder="Detalle de solución" required></textarea>
+        <textarea matInput placeholder="Detalle de solución" required formControlName="solutionDetail"></textarea>
     </mat-form-field>
+    <div *ngIf="addSolutionForm.get('solutionDetail').errors" class="text-error">
+        Este campo es obligatorio y debe ser mayor a 20 caracteres.
+    </div>
 
     <mat-form-field class="example-full-width" id="mat-form-field" class="file" (click)="fileInput.click()">
         <mat-label>Subir adjuntos de la Solución</mat-label>
@@ -60,9 +71,11 @@
             Cancelar
         </button>
 
-        <button mat-raised-button id="button" class="button-login">
+        <button mat-raised-button id="button" class="button-login" [disabled]="addSolutionForm.invalid">
             <mat-icon>add</mat-icon>
             Crear solución
         </button>
+    
     </div>
+</form>
 </div>
