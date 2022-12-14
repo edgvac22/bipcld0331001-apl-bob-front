@@ -11,7 +11,8 @@ export const environment = {
     redirectUri: 'http://localhost:4200/home',
     postLogoutRedirectUri: `${window.location.origin}/login`,
     endpoints: {
-      API: 'http://localhost:3000/dev'
+      API: 'http://localhost:3000/dev',
+      FILE_API: 'http://localhost:9000'
     },
     cacheLocation: 'localStorage',
   },

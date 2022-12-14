@@ -51,7 +51,7 @@
         </button>
 
         <input type="text" readonly matInput disabled />
-        <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" />
+        <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" multiple accept="image/png, image/jpg, image/jpeg"/>
     </mat-form-field>
 
     <div id="buttons">

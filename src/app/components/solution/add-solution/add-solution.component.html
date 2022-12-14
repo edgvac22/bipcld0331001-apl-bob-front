@@ -56,13 +56,13 @@
     </div>
 
     <mat-form-field class="example-full-width" id="mat-form-field" class="file" (click)="fileInput.click()">
-        <mat-label>Subir adjuntos de la Solución</mat-label>
+        
         <button mat-icon-button matPrefix>
             <mat-icon>attach_file</mat-icon>
         </button>
 
-        <input type="text" readonly matInput disabled />
-        <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" />
+        <input type="text" readonly matInput disabled value="{{ fileLength || 'No se han subido archivos'}}"/>
+        <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" multiple accept="image/png, image/jpg, image/jpeg" />
     </mat-form-field>
 
     <div id="buttons">
