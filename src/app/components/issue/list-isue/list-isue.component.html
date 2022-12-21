@@ -11,32 +11,32 @@
 
   <div class="mat-elevation-z8">
 
-    <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+    <mat-table #table [dataSource]="dataSource" matSort>
 
       <!-- IssueId Column -->
       <ng-container matColumnDef="issueId">
-        <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by issueId"> Id
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Id
         </mat-header-cell>
         <mat-cell *matCellDef="let issue"> <a (click)="createSolution(issue.issueId)">{{issue.issueId}}</a> </mat-cell>
       </ng-container>
 
       <!-- Area Column -->
       <ng-container matColumnDef="area">
-        <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by area"> Área de TI
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Área de TI
         </mat-header-cell>
         <mat-cell *matCellDef="let issue"> {{issue.area}} </mat-cell>
       </ng-container>
 
       <!-- Environment Column -->
       <ng-container matColumnDef="environment">
-        <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by environment"> Ambiente
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Ambiente
         </mat-header-cell>
         <mat-cell *matCellDef="let issue"> {{issue.environment}} </mat-cell>
       </ng-container>
 
       <!-- IssueDetail Column -->
       <ng-container matColumnDef="issueDetail">
-        <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by issueDetail"> Detalle
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Detalle
         </mat-header-cell>
         <mat-cell *matCellDef="let issue"> {{ (issue.issueDetail.length)? (issue.issueDetail |
           slice:0:40)+'...':(issue.issueDetail ) }} </mat-cell>
@@ -56,7 +56,10 @@
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay filtros relacionados con: "{{input.value}}"</td>
+      </tr>
+  </mat-table>
     <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5,10,15]" showFirstLastButtons
       aria-label="Select page">
     </mat-paginator>

@@ -7,6 +7,7 @@ import { AddSolutionComponent } from './components/solution/add-solution/add-sol
 import { ListSolutionComponent } from './components/solution/list-solution/list-solution.component';
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { MsalGuard } from '@azure/msal-angular';
+import { BrowserUtils } from '@azure/msal-browser';
 
 const isIframe = window !== window.parent && !window.opener;
 
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'issue/list', component: ListIsueComponent },
   { path: 'solution/list', component: ListSolutionComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent, canActivate: [MsalGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [MsalGuard]},
   { path: '', redirectTo: '', pathMatch: 'full', component: LoginComponent },
   { path: '**', component: NotFoundComponent }
 ];
@@ -25,4 +26,5 @@ const routes: Routes = [
   })],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

@@ -6,15 +6,17 @@
         <input matInput value="{{dataSource.issueId}}" readonly />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Área de TI</mat-label>
-        <input matInput readonly value="{{dataSource.area}}">
-    </mat-form-field>
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Ambiente</mat-label>
-        <input matInput readonly value="{{dataSource.environment}}">
-    </mat-form-field>
+    <div id="div-same">
+        <mat-form-field appearance="fill" id="same">
+            <mat-label>Área de TI</mat-label>
+            <input matInput readonly value="{{dataSource.area}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" id="same" class="environment">
+            <mat-label>Ambiente</mat-label>
+            <input matInput readonly value="{{dataSource.environment}}">
+        </mat-form-field>
+    </div>
 
     <mat-form-field class="example-full-width" id="mat-form-field" class="description">
         <mat-label>Detalle del Hallazgo</mat-label>
@@ -30,52 +32,58 @@
     </mat-form-field>
 
 
-    <form [formGroup]="addSolutionForm" (ngSubmit)="addSolution()">
-    <br>
-    <mat-form-field appearance="fill">
-        <input matInput placeholder="Usuario de la solución" required formControlName="solutionUser">
-    </mat-form-field>
-    <div *ngIf="addSolutionForm.get('solutionUser').errors" class="text-error">
-        Este campo es obligatorio.
-    </div>
+    <form [formGroup]="addSolutionForm">
+        <br>
+        <mat-form-field appearance="fill" id="mat-form-field">
+            <input matInput placeholder="Usuario de la solución" required formControlName="solutionUser"
+                [(ngModel)]="createSolution.solutionUser">
+        </mat-form-field>
+        <div *ngIf="addSolutionForm.get('solutionUser').errors" class="text-error">
+            Este campo es obligatorio.
+        </div>
 
-    <br>
-    <mat-form-field appearance="fill">
-        <input matInput placeholder="Título de la solución" required formControlName="solutionTitle">
-    </mat-form-field>
-    <div *ngIf="addSolutionForm.get('solutionTitle').errors" class="text-error">
-        Este campo es obligatorio y debe ser mayor a 5 caracteres.
-    </div>
+        <br>
+        <mat-form-field appearance="fill" id="mat-form-field">
+            <input matInput placeholder="Título de la solución" required formControlName="solutionTitle"
+                [(ngModel)]="createSolution.solutionTitle">
+        </mat-form-field>
+        <div *ngIf="addSolutionForm.get('solutionTitle').errors" class="text-error">
+            Este campo es obligatorio y debe ser mayor a 5 caracteres.
+        </div>
 
-    <br>
-    <mat-form-field appearance="fill">
-        <textarea matInput placeholder="Detalle de solución" required formControlName="solutionDetail"></textarea>
-    </mat-form-field>
-    <div *ngIf="addSolutionForm.get('solutionDetail').errors" class="text-error">
-        Este campo es obligatorio y debe ser mayor a 20 caracteres.
-    </div>
+        <br>
+        <mat-form-field appearance="fill" id="mat-form-field">
+            <textarea matInput placeholder="Detalle de solución" required formControlName="solutionDetail"
+                [(ngModel)]="createSolution.solutionDetail"></textarea>
+        </mat-form-field>
+        <div *ngIf="addSolutionForm.get('solutionDetail').errors" class="text-error">
+            Este campo es obligatorio y debe ser mayor a 20 caracteres.
+        </div>
 
-    <mat-form-field class="example-full-width" id="mat-form-field" class="file" (click)="fileInput.click()">
-        
-        <button mat-icon-button matPrefix>
-            <mat-icon>attach_file</mat-icon>
-        </button>
+        <mat-form-field class="example-full-width" id="mat-form-field" class="file" (click)="fileInput.click()">
 
-        <input type="text" readonly matInput disabled value="{{ fileLength || 'No se han subido archivos'}}"/>
-        <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" multiple accept="image/png, image/jpg, image/jpeg" />
-    </mat-form-field>
+            <button mat-icon-button matPrefix>
+                <mat-icon>attach_file</mat-icon>
+            </button>
 
-    <div id="buttons">
-        <button mat-raised-button id="button" (click)="close()">
-            <mat-icon>cancel</mat-icon>
-            Cancelar
-        </button>
+            <input type="text" readonly matInput disabled value="{{ fileLength || 'No se han subido archivos'}}"
+                id="mat-form-field" />
+            <input (change)="onFileSelected($event, dataSource.issueId)" hidden #fileInput type="file" id="file"
+                multiple accept="image/png, image/jpg, image/jpeg" />
+        </mat-form-field>
 
-        <button mat-raised-button id="button" class="button-login" [disabled]="addSolutionForm.invalid">
-            <mat-icon>add</mat-icon>
-            Crear solución
-        </button>
-    
-    </div>
-</form>
+        <div id="buttons">
+            <button mat-raised-button id="button" (click)="close()">
+                <mat-icon>cancel</mat-icon>
+                Cancelar
+            </button>
+
+            <button mat-raised-button id="button" class="button-login" [disabled]="addSolutionForm.invalid"
+                (click)="addSolution(dataSource.issueId)">
+                <mat-icon>add</mat-icon>
+                Crear solución
+            </button>
+
+        </div>
+    </form>
 </div>

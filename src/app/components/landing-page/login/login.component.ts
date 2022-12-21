@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
 import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
@@ -11,7 +11,6 @@ import { filter, takeUntil } from 'rxjs/operators';
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
-
   isIframe = false;
   loginDisplay = false;
   private readonly _destroying$ = new Subject<void>();

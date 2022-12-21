@@ -8,9 +8,25 @@ h1 {
     text-align: center;
 }
 
+#same {
+    width: 50%;
+}
+
+#div-same {
+    display:flex;
+}
+
 .contain {
     margin-left: 25px;
     margin-right: 25px;
+}
+
+.environment {
+    margin-left: 10px;
+}
+
+.image-click {
+    cursor: pointer;
 }
 
 .mat-form-field {
@@ -37,4 +53,11 @@ h1 {
     margin-top: 2%;
     text-align: center;
     margin-bottom: 25px;
+}
+
+.text-error {
+    margin-top: -15px;
+    font-size: 12px;
+    color: red;
+    margin-bottom: -5px;
 }

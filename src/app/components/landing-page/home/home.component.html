@@ -1,16 +1,8 @@
 <div *ngIf="!loginDisplay">
-    <p>Please sign-in to see your profile information.</p>
+    <p>Favor iniciar sesión</p>
 </div>
 
 <div *ngIf="loginDisplay">
-    <app-navbar></app-navbar>
     <p>Login successful!</p>
-    <p>Request your profile information by clicking Profile above.</p>
-    <div>
-        <p><strong>First Name: </strong> {{profile?.givenName}}</p>
-        <p><strong>Last Name: </strong> {{profile?.surname}}</p>
-        <p><strong>Email: </strong> {{profile?.userPrincipalName}}</p>
-        <p><strong>Id: </strong> {{profile?.id}}</p>
-    </div>
-    <button (click)="logout()">Cerrar sesión</button>
+    <p>Has entrado correctamente.</p>
 </div>

@@ -16,8 +16,8 @@ import { IssueComponent } from './components/issue/issue.component';
 import { SolutionComponent } from './components/solution/solution.component';
 import { ListIsueComponent } from './components/issue/list-isue/list-isue.component';
 import { MainComponent } from './components/main/main.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -32,9 +32,11 @@ import { TranslatePaginatorComponent } from './shared/translate-paginator/transl
 import { AddSolutionComponent } from './components/solution/add-solution/add-solution.component';
 import { UpdateSolutionComponent } from './components/solution/update-solution/update-solution.component';
 import { LoginComponent } from './components/landing-page/login/login.component';
-import { MsalGuard, MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
-import { environment } from 'src/environments/environment'
+import { MsalGuard, MsalInterceptor, MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
+import { environment } from '../environments/environment';
+import { SeeImageSolutionComponent } from './components/solution/update-solution/see-image-solution/see-image-solution.component';
+import { SwiperModule } from "swiper/angular";
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -55,9 +57,11 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     TranslatePaginatorComponent,
     AddSolutionComponent,
     UpdateSolutionComponent,
-    LoginComponent
+    LoginComponent,
+    SeeImageSolutionComponent
   ],
   imports: [
+    SwiperModule,
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
@@ -71,14 +75,15 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    FormsModule,
     MatListModule,
     MatCardModule,
     MatDialogModule,
     MsalModule.forRoot(new PublicClientApplication({
       auth: {
         clientId: environment.config.clientId,
-        redirectUri: environment.config.redirectUri,
         authority: environment.config.authority,
+        redirectUri: environment.config.redirectUri
       },
       cache: {
         cacheLocation: 'localStorage',
@@ -96,7 +101,14 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       ])
     })
   ],
-  providers: [MsalGuard],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    },
+    MsalGuard
+  ],
   bootstrap: [AppComponent, MsalRedirectComponent]
 })
 export class AppModule { }

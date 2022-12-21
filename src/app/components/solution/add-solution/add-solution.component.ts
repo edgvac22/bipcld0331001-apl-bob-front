@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { IssueService } from 'src/app/services/issue/issue.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution/solution.service';
+import { CreateSolution } from 'src/app/models/create-solution';
 
 @Component({
   selector: 'app-add-solution',
@@ -17,6 +18,8 @@ export class AddSolutionComponent implements OnInit {
   filename = '';
   fileLength: any;
   fileToUpload: File;
+  solution: CreateSolution[];
+  createSolution = new CreateSolution();
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -36,34 +39,46 @@ export class AddSolutionComponent implements OnInit {
     this.getInfo(this.data.issueId);
   }
 
-  getInfo(issueId: string) {
+  async getInfo(issueId: string) {
     this.issueService.getIssue(issueId).subscribe((response) => {
       this.dataSource = response;
     });
   }
 
-  addSolution() {
-    if (this.addSolutionForm.invalid) {
-      console.log("algo paso!")
-    } else {
-      alert(`Solución creada exitosamente!`);
-      this.dialogRef.close()
-      this.router.navigate(['/solution/list']);
+  async addSolution(issueId: string) {
+    if (!this.addSolutionForm.invalid) {
+      this.solutionService.addSolution(issueId, this.createSolution).subscribe(data => {
+        alert(`Solución creada exitosamente!`);
+        this.dialogRef.close()
+        this.router.navigate(['/solution/list']);
+      })
     }
   }
 
-  close() {
+  async close() {
     this.dialogRef.close()
   }
 
-  onFileSelected(event: any) {
-    const file: any = File = event.target.files;
-    this.fileLength = `${file.length} archivos subidos`;
-    console.log(file);
-    for (const element of file) {
-      this.solutionService.uploadSolutionFile(element).subscribe(data => {
-        console.log(data);
-      })
+  async onFileSelected(event: any, issueId: string) {
+    const files = event.target.files;
+    this.fileLength = `${files.length} archivos subidos`;
+
+    if (files.length === 1) {
+      this.fileLength = `${this.fileLength} archivo subido`;
+    }
+
+    if (files.length < 11) {
+      this.solutionService.uploadSolutionFile(files, issueId).subscribe((data: any) => {
+        if (data.msg === 'Los archivos se han sido subido exitosamente' && data.length > 0) {
+          alert(data.msg);
+        } else {
+          alert("Solo se permiten archivos jpg o png.");
+          this.fileLength = `No se han subido archivos`;
+        }
+      });
+    } else {
+      alert('Cantidad de archivos superior al limite.');
+      this.fileLength = `No se han subido archivos`;
     }
   }
 }

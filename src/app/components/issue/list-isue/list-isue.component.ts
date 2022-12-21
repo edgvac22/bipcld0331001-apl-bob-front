@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { Issue } from 'src/app/models/issue';
 import { IssueService } from 'src/app/services/issue/issue.service';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatDialog } from '@angular/material/dialog';
 import { AddSolutionComponent } from '../../solution/add-solution/add-solution.component';
 
@@ -14,20 +13,19 @@ import { AddSolutionComponent } from '../../solution/add-solution/add-solution.c
   styleUrls: ['./list-isue.component.css']
 })
 
-export class ListIsueComponent implements OnInit {
+export class ListIsueComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['issueId', 'area', 'environment', 'issueDetail', 'icons'];
-  dataSource = new MatTableDataSource<Issue>();
+  dataSource: MatTableDataSource<Issue>;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private issueService: IssueService, private _liveAnnouncer: LiveAnnouncer, private dialog: MatDialog) {
+  constructor(private issueService: IssueService, private dialog: MatDialog) {
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    
   }
 
   ngOnInit(): void {
@@ -43,7 +41,7 @@ export class ListIsueComponent implements OnInit {
   createSolution(issueId: string): void {
     this.dialog.open(AddSolutionComponent, {
       width: '800px',
-      height: '600px',
+      height: '770px',
       data: {
         issueId: issueId
       }
@@ -53,13 +51,5 @@ export class ListIsueComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 }

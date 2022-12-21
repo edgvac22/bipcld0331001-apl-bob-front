@@ -13,8 +13,21 @@ h1 {
     margin-right: 25px;
 }
 
-.mat-form-field {
+
+#mat-form-field {
     width: 100%;
+}
+
+#same {
+    width: 50%;
+}
+
+#div-same {
+    display:flex;
+}
+
+.environment {
+    margin-left: 10px;
 }
 
 .mat-icon {

@@ -6,15 +6,19 @@
         <input matInput value="{{dataSource.issueId}}" readonly />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <div id="div-same">
+
+    <mat-form-field appearance="fill" id="same">
         <mat-label>Área de TI</mat-label>
         <input matInput readonly value="{{dataSource.area}}">
     </mat-form-field>
     <br>
-    <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill" class="environment">
         <mat-label>Ambiente</mat-label>
         <input matInput readonly value="{{dataSource.environment}}">
     </mat-form-field>
+    </div>
 
     <mat-form-field class="example-full-width" id="mat-form-field" class="description">
         <mat-label>Detalle del Hallazgo</mat-label>
@@ -28,31 +32,42 @@
         </button>
         <input type="text" readonly matInput disabled />
     </mat-form-field>
-
-    <br>
+    <form [formGroup]="updateSolutionForm">
+    
     <mat-form-field appearance="fill">
-        <input matInput placeholder="Usuario de la solución" value="{{dataSource.solutionUser}}">
+        <input matInput placeholder="Usuario de la solución" value="{{dataSource.solutionUser}}" formControlName="solutionUser"
+         [(ngModel)]="updateSolut.solutionUser">
     </mat-form-field>
 
     <br>
     <mat-form-field appearance="fill">
-        <input matInput placeholder="Título de la solución" value="{{dataSource.solutionTitle}}">
+        <input matInput placeholder="Título de la solución" value="{{dataSource.solutionTitle}}" formControlName="solutionTitle"
+        [(ngModel)]="updateSolut.solutionTitle">
     </mat-form-field>
+
+    <div *ngIf="updateSolutionForm.get('solutionTitle').errors" class="text-error">
+        Debes cambiar algún caracter y debe ser superior a 5 caracteres.
+    </div>
 
     <br>
     <mat-form-field appearance="fill">
-        <textarea matInput placeholder="Detalle de solución" value="{{dataSource.solutionDetail}}"></textarea>
+        <textarea matInput placeholder="Detalle de solución" value="{{dataSource.solutionDetail}}" formControlName="solutionDetail"
+        [(ngModel)]="updateSolut.solutionDetail"></textarea>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" id="mat-form-field" class="file" (click)="fileInput.click()">
-        <mat-label>Adjuntos de la Solución</mat-label>
+    <div *ngIf="updateSolutionForm.get('solutionDetail').errors" class="text-error">
+        Debes cambiar algún caracter y debe ser superior a 20 caracteres.
+    </div>
+
+
+    <mat-form-field class="example-full-width" id="mat-form-field" (click)="getImages(dataSource.issueId)">
+        <mat-label>Ver adjuntos de la Solución</mat-label>
         <button mat-icon-button matPrefix>
             <mat-icon>attach_file</mat-icon>
         </button>
 
-        <input type="text" readonly matInput disabled />
-        <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" multiple accept="image/png, image/jpg, image/jpeg"/>
-    </mat-form-field>
+        <input type="text" readonly matInput disabled class="image-click"/>
+      </mat-form-field>
 
     <div id="buttons">
         <button mat-raised-button id="button" (click)="close()">
@@ -60,9 +75,11 @@
             Cancelar
         </button>
 
-        <button mat-raised-button id="button" class="button-login">
+        <button mat-raised-button id="button" class="button-login" (click)="updateSolution(dataSource.issueId)" 
+        [disabled]="updateSolutionForm.invalid">
             <mat-icon>add</mat-icon>
             Actualizar solución
         </button>
     </div>
+</form>
 </div>

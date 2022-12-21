@@ -1,0 +1,8 @@
+<swiper [navigation]="true" class="mySwiper">
+    <ng-template swiperSlide *ngFor="let slide of slides; index as i">
+        <img [src]="slide" alt="Solución #{{i+1}}">
+    </ng-template>
+</swiper>
+<button mat-raised-button (click)="close()">Cerrar</button>
+<button mat-raised-button (click)="fileInput.click()">Agregar adjuntos</button>
+<input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" multiple accept="image/png, image/jpg, image/jpeg"/>

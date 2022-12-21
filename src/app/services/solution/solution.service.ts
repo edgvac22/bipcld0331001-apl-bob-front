@@ -1,15 +1,18 @@
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Solution } from '../../models/solution';
-import { Express } from 'express';
+import { CreateSolution } from 'src/app/models/create-solution';
+import { CountObjectFile } from 'src/app/models/count-object-file';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SolutionService {
+    errorMsg!: string;
+
     readonly API = environment.config.endpoints.API;
     readonly FILE_API = environment.config.endpoints.FILE_API;
 
@@ -26,15 +29,48 @@ export class SolutionService {
     }
 
     removeSolution(issueId: string) {
-        const ENDPOINT = `${this.API}/solution/remove/${issueId}`;
-        return this.http.post(ENDPOINT, issueId, this.httpOptions)
+        const ENDPOINT = `${this.API}/solution/${issueId}/remove`;
+        return this.http.post(ENDPOINT, issueId)
             .pipe(map((response) => response));
     }
 
-    uploadSolutionFile(file: File) {
+    addSolution(issueId: string, solution: CreateSolution) {
+        const ENDPOINT = `${this.API}/solution/${issueId}/new`;
+        return this.http.post(ENDPOINT, solution, this.httpOptions)
+            .pipe(map((response) => response));
+    }
+
+    updateSolution(issueId: string, solution: CreateSolution) {
+        const ENDPOINT = `${this.API}/solution/${issueId}/update`;
+        return this.http.post(ENDPOINT, solution, this.httpOptions)
+            .pipe(map((response) => response));
+    }
+
+    uploadSolutionFile(files: FileList, issueId: string) {
         const formData: FormData = new FormData();
-        formData.append('files[]', file, file.name);
-        const ENDPOINT = `${this.FILE_API}/solution/file/upload`;
-        return this.http.post(ENDPOINT, formData,).pipe(map((response) => response))
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i], files[i].name);
+        }
+        const ENDPOINT = `${this.FILE_API}/solution/file/${issueId}`;
+        return this.http.post(ENDPOINT, formData).pipe(map((response) => response))
+            .pipe(catchError((error) => {
+                if (error.status === 413) {
+                    return of(this.errorMsg = `El tamaño de archivo supera al máximo`);
+                }
+                return of(error.status);
+            }),
+        )
+    }
+
+    verifyCountObjectFile(issueId: string) {
+        const ENDPOINT = `${this.FILE_API}/solution/count/${issueId}`;
+        return this.http.get<CountObjectFile[]>(ENDPOINT, this.httpOptions)
+            .pipe(map((response: any) => response));
+    }
+
+    getImageFiles(issueId: string) {
+        const ENDPOINT = `${this.FILE_API}/solution/image/${issueId}`;
+        return this.http.get<any[]>(ENDPOINT, this.httpOptions)
+        .pipe(map((response: any) => response));
     }
 }

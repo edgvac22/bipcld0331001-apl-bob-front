@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Solution } from 'src/app/models/solution';
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { UpdateSolutionComponent } from '../update-solution/update-solution.component';
@@ -21,12 +22,13 @@ export class ListSolutionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private solutionService: SolutionService, private _liveAnnouncer: LiveAnnouncer, private dialog: MatDialog) {
+  constructor(private solutionService: SolutionService, private _liveAnnouncer: LiveAnnouncer, private dialog: MatDialog,
+    private router: Router) {
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort; 
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit(): void {
@@ -55,7 +57,7 @@ export class ListSolutionComponent implements OnInit {
   updateSolution(issueId: string): void {
     this.dialog.open(UpdateSolutionComponent, {
       width: '800px',
-      height: '600px',
+      height: '715px',
       data: {
         issueId: issueId
       }
@@ -65,7 +67,10 @@ export class ListSolutionComponent implements OnInit {
   removeSolution(issueId: string, solutionId: string) {
     if (confirm(`¿Desea eliminar la solución #${solutionId}?`)) {
       this.solutionService.removeSolution(issueId).subscribe((response) => {
-        console.log(response);
+        alert("Solución eliminada exitosamente");
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/solution/list']);
+        });
       });
     }
   }
