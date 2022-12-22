@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SolutionService } from 'src/app/services/solution/solution.service';
-import SwiperCore, { Navigation } from "swiper";
+import SwiperCore, { Navigation, Swiper } from "swiper";
 import { UpdateSolutionComponent } from '../update-solution.component';
 
 // install Swiper modules
@@ -14,24 +14,36 @@ SwiperCore.use([Navigation]);
   styleUrls: ['./see-image-solution.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SeeImageSolutionComponent implements OnInit {
+export class SeeImageSolutionComponent implements OnInit, AfterViewInit {
+  thumbsSwiper: any;
   slides: any = [];
   fileLength: any;
   imagen = '../../../../../assets/img/background/back-1.png';
-  
+
+  @ViewChild('galleryTop') galleryTopElement: ElementRef;
+  @ViewChild('galleryThumbs') galleryThumbsElement: ElementRef;
+
+  galleryTop: Swiper;
+  galleryThumbs: Swiper;
+
   constructor(
     private solutionService: SolutionService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<SeeImageSolutionComponent>,
     private dialogRefUpdateSolution: MatDialogRef<UpdateSolutionComponent>,
     private router: Router,
-    
+
   ) { }
 
   async ngOnInit(): Promise<void> {
     this.solutionService.getImageFiles(this.data.issueId).subscribe((response) => {
       this.slides = response;
     });
+  }
+
+
+  ngAfterViewInit() {
+    
   }
 
   close() {
@@ -54,7 +66,7 @@ export class SeeImageSolutionComponent implements OnInit {
             alert(data.msg);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
               this.dialogRef.close();
-              
+
               this.router.navigate(['/solution/list']);
             });
           } else {

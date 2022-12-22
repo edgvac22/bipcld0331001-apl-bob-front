@@ -49,7 +49,7 @@ export class UpdateSolutionComponent implements OnInit {
   getImages(issueId: string) {
     this.dialog.open(SeeImageSolutionComponent, {
       width: '1000px',
-      height: '665px',
+      height: '750px',
       data: {
         issueId: issueId
       }

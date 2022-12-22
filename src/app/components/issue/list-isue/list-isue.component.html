@@ -13,13 +13,6 @@
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
-      <!-- IssueId Column -->
-      <ng-container matColumnDef="issueId">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Id
-        </mat-header-cell>
-        <mat-cell *matCellDef="let issue"> <a (click)="createSolution(issue.issueId)">{{issue.issueId}}</a> </mat-cell>
-      </ng-container>
-
       <!-- Area Column -->
       <ng-container matColumnDef="area">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Área de TI

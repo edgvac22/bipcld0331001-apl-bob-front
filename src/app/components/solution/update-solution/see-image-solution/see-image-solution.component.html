@@ -1,8 +1,18 @@
-<swiper [navigation]="true" class="mySwiper">
+<swiper style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff"  [spaceBetween]="10"
+    [navigation]="true" [thumbs]="{ swiper: thumbsSwiper }" class="mySwiper2 gallery-top" id="swipper">
     <ng-template swiperSlide *ngFor="let slide of slides; index as i">
         <img [src]="slide" alt="Solución #{{i+1}}">
     </ng-template>
 </swiper>
-<button mat-raised-button (click)="close()">Cerrar</button>
+
+<swiper (swiper)="thumbsSwiper = $event" [spaceBetween]="10" [slidesPerView]="4" [freeMode]="true"
+    [watchSlidesProgress]="true" class="mySwiper gallery-thumbs">
+    <ng-template swiperSlide *ngFor="let slide of slides; index as i">
+        <img [src]="slide" alt="Solución #{{i+1}}" class="swiper-slide-container">
+    </ng-template>
+</swiper><br>
+  
+<button mat-raised-button (click)="close()" class="close">Cerrar</button>
 <button mat-raised-button (click)="fileInput.click()">Agregar adjuntos</button>
-<input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" multiple accept="image/png, image/jpg, image/jpeg"/>
+<input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" multiple
+    accept="image/png, image/jpg, image/jpeg" />

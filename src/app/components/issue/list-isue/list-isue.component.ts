@@ -14,7 +14,7 @@ import { AddSolutionComponent } from '../../solution/add-solution/add-solution.c
 })
 
 export class ListIsueComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['issueId', 'area', 'environment', 'issueDetail', 'icons'];
+  displayedColumns: string[] = ['area', 'environment', 'issueDetail', 'icons'];
   dataSource: MatTableDataSource<Issue>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

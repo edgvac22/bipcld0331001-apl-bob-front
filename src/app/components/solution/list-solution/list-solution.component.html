@@ -12,13 +12,6 @@
 
         <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
-            <!-- SolutionId Column -->
-            <ng-container matColumnDef="solutionId">
-                <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by issueId"> Id
-                </mat-header-cell>
-                <mat-cell *matCellDef="let solution"> <a (click)="updateSolution(solution.issueId)">{{solution.solutionId}}</a> </mat-cell>
-            </ng-container>
-
             <!-- Title Column -->
             <ng-container matColumnDef="title">
                 <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title"> Título

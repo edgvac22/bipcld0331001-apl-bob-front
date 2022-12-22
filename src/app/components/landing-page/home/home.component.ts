@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
+import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -11,7 +12,8 @@ import { filter } from 'rxjs/operators';
 
 export class HomeComponent implements OnInit {
 
-    loginDisplay = false;
+  loginDisplay = false;
+  private readonly _destroying$ = new Subject<void>();
 
   constructor(private authService: MsalService, private msalBroadcastService: MsalBroadcastService) { }
 
@@ -35,5 +37,10 @@ export class HomeComponent implements OnInit {
 
   setLoginDisplay() {
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+  }
+
+  ngOnDestroy(): void {
+    this._destroying$.next(undefined);
+    this._destroying$.complete();
   }
 }

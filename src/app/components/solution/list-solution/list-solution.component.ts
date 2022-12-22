@@ -16,7 +16,7 @@ import { UpdateSolutionComponent } from '../update-solution/update-solution.comp
 })
 export class ListSolutionComponent implements OnInit {
 
-  displayedColumns: string[] = ['solutionId', 'title', 'area', 'environment', 'icons'];
+  displayedColumns: string[] = ['title', 'area', 'environment', 'icons'];
   dataSource = new MatTableDataSource<Solution>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

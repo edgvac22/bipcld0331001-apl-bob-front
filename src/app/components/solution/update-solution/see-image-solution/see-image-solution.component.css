@@ -1,17 +1,19 @@
-@import 'swiper/swiper.less';
+@import 'swiper/swiper-bundle.min.css';
 @import 'swiper/modules/pagination/pagination.less';
 @import 'swiper/modules/navigation/navigation.less';
+@import "swiper/modules/free-mode/free-mode.less";
 
 .swiper {
-    height: 550px;
-    width: 900px;
-    margin-bottom: 25px;
+  width: 100%;
+  height: 100%;
 }
 
 .swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
+
+  /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -33,6 +35,51 @@
   object-fit: cover;
 }
 
-.mat-raised-button {
-    margin-left: 25px;
+body {
+  background: #000;
+  color: #000;
+}
+
+.swiper {
+  width: 100%;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper2 {
+  height: 500px;
+  width: 100%;
+}
+
+.mySwiper {
+  height: 20%;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+
+.mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.close {
+  margin-right: 15px;
 }

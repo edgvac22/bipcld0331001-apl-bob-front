@@ -35,12 +35,14 @@
     <form [formGroup]="updateSolutionForm">
     
     <mat-form-field appearance="fill">
+        <mat-label>Usuario solucionador</mat-label>
         <input matInput placeholder="Usuario de la solución" value="{{dataSource.solutionUser}}" formControlName="solutionUser"
          [(ngModel)]="updateSolut.solutionUser">
     </mat-form-field>
 
     <br>
     <mat-form-field appearance="fill">
+        <mat-label>Título de la solución</mat-label>
         <input matInput placeholder="Título de la solución" value="{{dataSource.solutionTitle}}" formControlName="solutionTitle"
         [(ngModel)]="updateSolut.solutionTitle">
     </mat-form-field>
@@ -51,6 +53,7 @@
 
     <br>
     <mat-form-field appearance="fill">
+        <mat-label>Detalle de la solución</mat-label>
         <textarea matInput placeholder="Detalle de solución" value="{{dataSource.solutionDetail}}" formControlName="solutionDetail"
         [(ngModel)]="updateSolut.solutionDetail"></textarea>
     </mat-form-field>
