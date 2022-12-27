@@ -1,9 +1,10 @@
-<div *ngIf="!loginDisplay">
+<div *ngIf="!loginDisplay" class="success">
     <p>Favor iniciar sesión</p>
 </div>
 
 <div *ngIf="loginDisplay">
     <app-navbar></app-navbar>
-    <p>Login successful!</p>
-    <p>Has entrado correctamente.</p>
+    <p class="success" id="msg">Login successful!</p>
+    <p class="success">Has entrado correctamente.</p>
+    <button mat-raised-button class="success" (click)="createIssue()"> Crear Hallazgo</button>
 </div>

@@ -1,10 +1,17 @@
 <div id="content">
     <h1>Crear Solución</h1>
 
-    <mat-form-field id="mat-form-field" appearance="fill" class="name">
-        <mat-label>Id del Hallazgo</mat-label>
-        <input matInput value="{{dataSource.issueId}}" readonly />
-    </mat-form-field>
+    <div id="div-same">
+        <mat-form-field id="mat-form-field" appearance="fill" class="name" id="same">
+            <mat-label>Id del Hallazgo</mat-label>
+            <input matInput value="{{dataSource.issueId}}" readonly />
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill" id="same" class="space-dif">
+            <mat-label>Usuario que crea el Hallazgo</mat-label>
+            <input matInput readonly value="{{dataSource.issueUser}}">
+        </mat-form-field>
+    </div>
 
     <div id="div-same">
         <mat-form-field appearance="fill" id="same">
@@ -12,7 +19,7 @@
             <input matInput readonly value="{{dataSource.area}}">
         </mat-form-field>
         <br>
-        <mat-form-field appearance="fill" id="same" class="environment">
+        <mat-form-field appearance="fill" id="same" class="space-dif">
             <mat-label>Ambiente</mat-label>
             <input matInput readonly value="{{dataSource.environment}}">
         </mat-form-field>
@@ -23,38 +30,25 @@
         <textarea matInput readonly value="{{dataSource.issueDetail}}"></textarea>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" id="mat-form-field" class="file">
+    <mat-form-field class="example-full-width" id="mat-form-field" class="file"
+        (click)="getImageIssue(dataSource.fileId)">
         <mat-label>Ver adjuntos del Hallazgo</mat-label>
         <button mat-icon-button matPrefix>
             <mat-icon>attach_file</mat-icon>
         </button>
-        <input type="text" readonly matInput disabled />
+        <input type="text" readonly matInput disabled class="image-click" />
     </mat-form-field>
 
-
     <form [formGroup]="addSolutionForm">
-        <br>
         <mat-form-field appearance="fill" id="mat-form-field">
-            <input matInput placeholder="Usuario de la solución" required formControlName="solutionUser"
-                [(ngModel)]="createSolution.solutionUser">
-        </mat-form-field>
-        <div *ngIf="addSolutionForm.get('solutionUser').errors" class="text-error">
-            Este campo es obligatorio.
-        </div>
-
-        <br>
-        <mat-form-field appearance="fill" id="mat-form-field">
-            <input matInput placeholder="Título de la solución" required formControlName="solutionTitle"
-                [(ngModel)]="createSolution.solutionTitle">
+            <input matInput placeholder="Título de la solución" required formControlName="solutionTitle">
         </mat-form-field>
         <div *ngIf="addSolutionForm.get('solutionTitle').errors" class="text-error">
             Este campo es obligatorio y debe ser mayor a 5 caracteres.
         </div>
 
-        <br>
         <mat-form-field appearance="fill" id="mat-form-field">
-            <textarea matInput placeholder="Detalle de solución" required formControlName="solutionDetail"
-                [(ngModel)]="createSolution.solutionDetail"></textarea>
+            <textarea matInput placeholder="Detalle de solución" required formControlName="solutionDetail"></textarea>
         </mat-form-field>
         <div *ngIf="addSolutionForm.get('solutionDetail').errors" class="text-error">
             Este campo es obligatorio y debe ser mayor a 20 caracteres.
@@ -73,17 +67,17 @@
         </mat-form-field>
 
         <div id="buttons">
-            <button mat-raised-button id="button" (click)="close()">
-                <mat-icon>cancel</mat-icon>
-                Cancelar
-            </button>
 
             <button mat-raised-button id="button" class="button-login" [disabled]="addSolutionForm.invalid"
                 (click)="addSolution(dataSource.issueId)">
-                <mat-icon>add</mat-icon>
-                Crear solución
+                <mat-icon>save</mat-icon>
+                Guardar Solución
             </button>
 
+            <button mat-raised-button id="button" (click)="close()" type="button">
+                <mat-icon>cancel</mat-icon>
+                Cancelar
+            </button>
         </div>
     </form>
 </div>

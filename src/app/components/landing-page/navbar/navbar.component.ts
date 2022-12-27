@@ -7,17 +7,15 @@ import { MsalService } from '@azure/msal-angular';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   constructor(private authService: MsalService) { }
-
-  ngOnInit(): void {
-  }
 
   logout() {
     this.authService.logoutPopup({
       mainWindowRedirectUri: "/"
     });
+    localStorage.removeItem('email');
   }
 
 }

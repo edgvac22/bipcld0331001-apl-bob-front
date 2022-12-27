@@ -1,0 +1,63 @@
+<h1>Crear Hallazgo</h1>
+
+<form [formGroup]="createIssueForm">
+
+    <div id="div-same">
+        <mat-form-field appearance="fill" id="same">
+            <mat-label>Área de TI</mat-label>
+            <mat-select formControlName="area">
+                <mat-option *ngFor="let data of area" [value]="data">{{data}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="environment" id="same">
+            <mat-label>Ambiente</mat-label>
+            <mat-select formControlName="environment">
+                <mat-option *ngFor="let data of environment" [value]="data">{{data}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div id="div-same" class="div-errors">
+    <div *ngIf="createIssueForm.get('area').errors" class="text-error" id="msg-error">
+        El campo area es obligatorio.
+    </div>
+    <div *ngIf="createIssueForm.get('environment').errors" class="text-error env-error" id="msg-error">
+        El campo ambiente es obligatorio.
+    </div>
+</div>
+
+    <mat-form-field appearance="fill" class="fields">
+        <mat-label>Explicar Hallazgo</mat-label>
+        <textarea matInput placeholder="Explicar Hallazgo" formControlName="issueDetail"></textarea>
+    </mat-form-field>
+
+    <div *ngIf="createIssueForm.get('issueDetail').errors" class="text-error">
+        Este campo es obligatorio y debe ser superior a 20 caracteres.
+    </div>
+
+    <mat-form-field class="example-full-width" id="mat-form-field" class="file" (click)="fileInput.click()">
+
+        <button mat-icon-button matPrefix>
+            <mat-icon>attach_file</mat-icon>
+        </button>
+
+        <input type="text" readonly matInput disabled value="{{ fileLength || 'No se han subido archivos'}}"
+            id="mat-form-field" />
+        <input (change)="onFileSelected($event)" hidden #fileInput type="file" id="file"
+            multiple accept="image/png, image/jpg, image/jpeg" />
+    </mat-form-field>
+
+    <div id="buttons">
+
+        <button mat-raised-button id="button" class="button-create" (click)="save()" [disabled]="createIssueForm.invalid">
+            <mat-icon>save</mat-icon>
+            Guardar Hallazgo
+        </button>
+
+        <button mat-raised-button id="button" (click)="close()" class="button-cancel" type="button">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

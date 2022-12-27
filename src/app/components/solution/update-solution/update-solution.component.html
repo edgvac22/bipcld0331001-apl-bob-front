@@ -1,23 +1,30 @@
 <div id="content">
     <h1>Actualizar Solución</h1>
 
-    <mat-form-field id="mat-form-field" appearance="fill" class="name">
-        <mat-label>Id del Hallazgo</mat-label>
-        <input matInput value="{{dataSource.issueId}}" readonly />
-    </mat-form-field>
+    <div id="div-same">
+        <mat-form-field id="mat-form-field" appearance="fill" class="name" id="same">
+            <mat-label>Id del Hallazgo</mat-label>
+            <input matInput value="{{dataSource.issueId}}" readonly />
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill" id="same" class="space-dif">
+            <mat-label>Usuario que crea el Hallazgo</mat-label>
+            <input matInput readonly value="{{dataSource.issueUser}}">
+        </mat-form-field>
+    </div>
 
     <div id="div-same">
 
-    <mat-form-field appearance="fill" id="same">
-        <mat-label>Área de TI</mat-label>
-        <input matInput readonly value="{{dataSource.area}}">
-    </mat-form-field>
-    <br>
+        <mat-form-field appearance="fill" id="same">
+            <mat-label>Área de TI</mat-label>
+            <input matInput readonly value="{{dataSource.area}}">
+        </mat-form-field>
+        <br>
 
-    <mat-form-field appearance="fill" class="environment">
-        <mat-label>Ambiente</mat-label>
-        <input matInput readonly value="{{dataSource.environment}}">
-    </mat-form-field>
+        <mat-form-field appearance="fill" class="space-dif" id="same">
+            <mat-label>Ambiente</mat-label>
+            <input matInput readonly value="{{dataSource.environment}}">
+        </mat-form-field>
     </div>
 
     <mat-form-field class="example-full-width" id="mat-form-field" class="description">
@@ -25,64 +32,66 @@
         <textarea matInput readonly value="{{dataSource.issueDetail}}"></textarea>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" id="mat-form-field" class="file">
+    <mat-form-field class="example-full-width" id="mat-form-field" class="file"
+        (click)="getImageIssue(dataSource.fileId)">
         <mat-label>Ver adjuntos del Hallazgo</mat-label>
         <button mat-icon-button matPrefix>
             <mat-icon>attach_file</mat-icon>
         </button>
-        <input type="text" readonly matInput disabled />
+        <input type="text" readonly matInput disabled class="image-click" />
     </mat-form-field>
     <form [formGroup]="updateSolutionForm">
-    
-    <mat-form-field appearance="fill">
-        <mat-label>Usuario solucionador</mat-label>
-        <input matInput placeholder="Usuario de la solución" value="{{dataSource.solutionUser}}" formControlName="solutionUser"
-         [(ngModel)]="updateSolut.solutionUser">
-    </mat-form-field>
 
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Título de la solución</mat-label>
-        <input matInput placeholder="Título de la solución" value="{{dataSource.solutionTitle}}" formControlName="solutionTitle"
-        [(ngModel)]="updateSolut.solutionTitle">
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Usuario solucionador</mat-label>
+            <input matInput placeholder="Usuario de la solución" value="{{dataSource.solutionUser}}" readonly>
+        </mat-form-field>
 
-    <div *ngIf="updateSolutionForm.get('solutionTitle').errors" class="text-error">
-        Debes cambiar algún caracter y debe ser superior a 5 caracteres.
-    </div>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Título de la solución</mat-label>
+            <input matInput placeholder="Título de la solución" value="{{dataSource.solutionTitle}}"
+                formControlName="solutionTitle">
+        </mat-form-field>
 
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Detalle de la solución</mat-label>
-        <textarea matInput placeholder="Detalle de solución" value="{{dataSource.solutionDetail}}" formControlName="solutionDetail"
-        [(ngModel)]="updateSolut.solutionDetail"></textarea>
-    </mat-form-field>
+        <div *ngIf="updateSolutionForm.get('solutionTitle').errors" class="text-error">
+            Debes cambiar algún caracter y debe ser superior a 5 caracteres.
+        </div>
 
-    <div *ngIf="updateSolutionForm.get('solutionDetail').errors" class="text-error">
-        Debes cambiar algún caracter y debe ser superior a 20 caracteres.
-    </div>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Detalle de la solución</mat-label>
+            <textarea matInput placeholder="Detalle de solución" value="{{dataSource.solutionDetail}}"
+                formControlName="solutionDetail"></textarea>
+        </mat-form-field>
+
+        <div *ngIf="updateSolutionForm.get('solutionDetail').errors" class="text-error">
+            Debes cambiar algún caracter y debe ser superior a 20 caracteres.
+        </div>
 
 
-    <mat-form-field class="example-full-width" id="mat-form-field" (click)="getImages(dataSource.issueId)">
-        <mat-label>Ver adjuntos de la Solución</mat-label>
-        <button mat-icon-button matPrefix>
-            <mat-icon>attach_file</mat-icon>
-        </button>
+        <mat-form-field class="example-full-width" id="mat-form-field" (click)="getImages(dataSource.issueId)">
+            <mat-label>Ver adjuntos de la Solución</mat-label>
+            <button mat-icon-button matPrefix>
+                <mat-icon>attach_file</mat-icon>
+            </button>
 
-        <input type="text" readonly matInput disabled class="image-click"/>
-      </mat-form-field>
+            <input type="text" readonly matInput disabled class="image-click" />
+        </mat-form-field>
 
-    <div id="buttons">
-        <button mat-raised-button id="button" (click)="close()">
-            <mat-icon>cancel</mat-icon>
-            Cancelar
-        </button>
+        <div id="buttons">
 
-        <button mat-raised-button id="button" class="button-login" (click)="updateSolution(dataSource.issueId)" 
-        [disabled]="updateSolutionForm.invalid">
-            <mat-icon>add</mat-icon>
-            Actualizar solución
-        </button>
-    </div>
-</form>
+            <button mat-raised-button id="button" class="button-update" (click)="updateSolution(dataSource.issueId)"
+                [disabled]="updateSolutionForm.invalid">
+                <mat-icon>refresh</mat-icon>
+                Actualizar solución
+            </button>
+
+            <button mat-raised-button id="button" (click)="close()" class="button-cancel" type="button">
+                <mat-icon>cancel</mat-icon>
+                Cancelar
+            </button>
+
+        </div>
+    </form>
 </div>

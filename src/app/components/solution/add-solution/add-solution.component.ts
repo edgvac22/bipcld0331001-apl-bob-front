@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { IssueService } from 'src/app/services/issue/issue.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { CreateSolution } from 'src/app/models/create-solution';
+import { SeeImageIssueComponent } from 'src/app/shared/see-image-issue/see-image-issue.component';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-add-solution',
@@ -18,21 +20,18 @@ export class AddSolutionComponent implements OnInit {
   filename = '';
   fileLength: any;
   fileToUpload: File;
-  solution: CreateSolution[];
-  createSolution = new CreateSolution();
+  msg: string;
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
     private issueService: IssueService,
     private dialogRef: MatDialogRef<AddSolutionComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private router: Router,
     private solutionService: SolutionService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     this.addSolutionForm = new FormGroup({
-      solutionUser: new FormControl(null, [Validators.required]),
       solutionTitle: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       solutionDetail: new FormControl(null, [Validators.required, Validators.minLength(21)])
     });
@@ -45,13 +44,44 @@ export class AddSolutionComponent implements OnInit {
     });
   }
 
+  async openDialog(msg: string) {
+    return {
+      width: '250px',
+      height: '150px',
+      data: { msg }
+    }
+  }
+
   async addSolution(issueId: string) {
     if (!this.addSolutionForm.invalid) {
-      this.solutionService.addSolution(issueId, this.createSolution).subscribe(data => {
-        alert(`Solución creada exitosamente!`);
-        this.dialogRef.close()
-        this.router.navigate(['/solution/list']);
+      const solutionTitle = this.addSolutionForm.get('solutionTitle')?.value
+      const solutionDetail = this.addSolutionForm.get('solutionDetail')?.value
+
+      const createSolution = {
+        solutionUser: localStorage.getItem('email'),
+        solutionTitle: solutionTitle,
+        solutionDetail: solutionDetail
+      }
+
+      this.solutionService.addSolution(issueId, createSolution).subscribe(data => {
+        this.msg = 'Solución creada exitosamente!';
+        this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
       })
+    }
+  }
+
+  getImageIssue(fileId: string) {
+    if (fileId === undefined) {
+      this.msg = 'No hay archivos agregados para este Hallazgo.';
+      this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
+    } else {
+      this.dialog.open(SeeImageIssueComponent, {
+        width: '1000px',
+        height: '750px',
+        data: {
+          fileId: fileId
+        }
+      });
     }
   }
 
@@ -67,18 +97,25 @@ export class AddSolutionComponent implements OnInit {
       this.fileLength = `${this.fileLength} archivo subido`;
     }
 
-    if (files.length < 11) {
-      this.solutionService.uploadSolutionFile(files, issueId).subscribe((data: any) => {
-        if (data.msg === 'Los archivos se han sido subido exitosamente' && data.length > 0) {
-          alert(data.msg);
-        } else {
-          alert("Solo se permiten archivos jpg o png.");
-          this.fileLength = `No se han subido archivos`;
-        }
-      });
-    } else {
-      alert('Cantidad de archivos superior al limite.');
-      this.fileLength = `No se han subido archivos`;
+    this.solutionService.verifyCountObjectFile(issueId).subscribe(dataObject => {
+      const lengthObjectPermitted = 10 - dataObject.length;
+      if (files.length < lengthObjectPermitted) {
+        this.solutionService.uploadSolutionFile(files, issueId).subscribe((data: any) => {
+          if (data.msg === 'Los archivos se han sido subido exitosamente' && data.length > 0) {
+            this.msg = data.msg;
+            this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
+          } else {
+            this.fileLength = `No se han subido archivos`;
+            this.msg = 'Solo se permiten archivos jpg o png.';
+            this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
+          }
+        });
+      } else {
+        this.fileLength = `No se han subido archivos`;
+        this.msg = 'Cantidad de archivos superior al limite.';
+        this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
+      }
     }
+    )
   }
 }

@@ -13,7 +13,7 @@ import { AddSolutionComponent } from '../../solution/add-solution/add-solution.c
   styleUrls: ['./list-isue.component.css']
 })
 
-export class ListIsueComponent implements OnInit, AfterViewInit {
+export class ListIsueComponent implements OnInit {
   displayedColumns: string[] = ['area', 'environment', 'issueDetail', 'icons'];
   dataSource: MatTableDataSource<Issue>;
 
@@ -23,11 +23,6 @@ export class ListIsueComponent implements OnInit, AfterViewInit {
   constructor(private issueService: IssueService, private dialog: MatDialog) {
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   ngOnInit(): void {
     this.listIssue();
   }
@@ -35,13 +30,15 @@ export class ListIsueComponent implements OnInit, AfterViewInit {
   listIssue() {
     this.issueService.listIssue().subscribe((response) => {
       this.dataSource = new MatTableDataSource(response);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
   createSolution(issueId: string): void {
     this.dialog.open(AddSolutionComponent, {
       width: '800px',
-      height: '770px',
+      height: '650px',
       data: {
         issueId: issueId
       }

@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Solution } from 'src/app/models/solution';
 import { SolutionService } from 'src/app/services/solution/solution.service';
+import { DeleteSolutionComponent } from '../delete-solution/delete-solution.component';
 import { UpdateSolutionComponent } from '../update-solution/update-solution.component';
 
 @Component({
@@ -15,7 +16,6 @@ import { UpdateSolutionComponent } from '../update-solution/update-solution.comp
   styleUrls: ['./list-solution.component.css']
 })
 export class ListSolutionComponent implements OnInit {
-
   displayedColumns: string[] = ['title', 'area', 'environment', 'icons'];
   dataSource = new MatTableDataSource<Solution>();
 
@@ -26,11 +26,6 @@ export class ListSolutionComponent implements OnInit {
     private router: Router) {
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   ngOnInit(): void {
     this.listSolution();
   }
@@ -38,6 +33,8 @@ export class ListSolutionComponent implements OnInit {
   listSolution() {
     this.solutionService.listSolution().subscribe((response) => {
       this.dataSource = new MatTableDataSource(response);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -65,13 +62,13 @@ export class ListSolutionComponent implements OnInit {
   }
 
   removeSolution(issueId: string, solutionId: string) {
-    if (confirm(`¿Desea eliminar la solución #${solutionId}?`)) {
-      this.solutionService.removeSolution(issueId).subscribe((response) => {
-        alert("Solución eliminada exitosamente");
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/solution/list']);
-        });
-      });
-    }
+    this.dialog.open(DeleteSolutionComponent, {
+      width: '250px',
+      height: '150px',
+      data: {
+        issueId: issueId,
+        solutionId: solutionId
+      }
+    })
   }
 }

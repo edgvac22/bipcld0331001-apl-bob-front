@@ -8,11 +8,9 @@ h1 {
     text-align: center;
 }
 
-.contain {
-    margin-left: 25px;
-    margin-right: 25px;
+#buttons {
+    display: flex;
 }
-
 
 #mat-form-field {
     width: 100%;
@@ -26,8 +24,17 @@ h1 {
     display:flex;
 }
 
-.environment {
+.contain {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.space-dif {
     margin-left: 10px;
+}
+
+.image-click {
+    cursor: pointer;
 }
 
 .mat-icon {
@@ -36,6 +43,7 @@ h1 {
 }
 
 .mat-raised-button{
+    width: 50%;
     background-color: #2c2a29;
     color: #ffffff;
     margin-left: 10px;
@@ -56,5 +64,5 @@ h1 {
     margin-top: -15px;
     font-size: 12px;
     color: red;
-    margin-bottom: -5px;
+    margin-bottom: 5px;
 }

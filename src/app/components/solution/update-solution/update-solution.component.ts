@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UpdateSolution } from 'src/app/models/update-solution';
 import { IssueService } from 'src/app/services/issue/issue.service';
 import { SolutionService } from 'src/app/services/solution/solution.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { SeeImageIssueComponent } from 'src/app/shared/see-image-issue/see-image-issue.component';
 import { SeeImageSolutionComponent } from './see-image-solution/see-image-solution.component';
 
 @Component({
@@ -15,25 +17,21 @@ import { SeeImageSolutionComponent } from './see-image-solution/see-image-soluti
 export class UpdateSolutionComponent implements OnInit {
   dataSource: any = [];
   srcResult: any;
-  solution: UpdateSolution[];
-  updateSolut = new UpdateSolution();
   fileLength: any;
   updateSolutionForm: FormGroup;
-  dataImg: any = []
+  dataImg: any = [];
+  msg: string;
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
     private issueService: IssueService,
     private dialogRef: MatDialogRef<UpdateSolutionComponent>,
     private solutionService: SolutionService,
-    private router: Router,
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) { }
 
   ngOnInit(): void {
     this.updateSolutionForm = new FormGroup({
-      solutionUser: new FormControl(null),
       solutionTitle: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       solutionDetail: new FormControl(null, [Validators.required, Validators.minLength(21)])
     });
@@ -47,63 +45,70 @@ export class UpdateSolutionComponent implements OnInit {
   }
 
   getImages(issueId: string) {
-    this.dialog.open(SeeImageSolutionComponent, {
-      width: '1000px',
-      height: '750px',
-      data: {
-        issueId: issueId
+    this.solutionService.verifyCountObjectFile(issueId).subscribe(dataObject => {
+      const total = dataObject.length + 1;
+      if (total === 0) {
+        this.dialog.open(SeeImageSolutionComponent, {
+          width: '450px',
+          height: '150px',
+          data: {
+            issueId: issueId,
+          }
+        });
+      } else {
+        this.dialog.open(SeeImageSolutionComponent, {
+          width: '1000px',
+          height: '750px',
+          data: {
+            issueId: issueId,
+            valid: true,
+          }
+        });
       }
-    });
+    })
+  }
+
+  getImageIssue(fileId: string) {
+    if (fileId === undefined) {
+      this.msg = 'No hay archivos agregados para este Hallazgo.';
+      this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
+    } else {
+      this.dialog.open(SeeImageIssueComponent, {
+        width: '1000px',
+        height: '750px',
+        data: {
+          fileId: fileId
+        }
+      });
+    }
   }
 
   close() {
     this.dialogRef.close()
   }
 
-  onFileSelected(event: any, issueId: string) {
-    const files = event.target.files;
-    this.fileLength = `${files.length} archivos subidos`;
-
-    if (files.length === 1) {
-      this.fileLength = `${this.fileLength} archivo subido`;
+  async openDialog(msg: string) {
+    return {
+      width: '250px',
+      height: '150px',
+      data: { msg }
     }
-
-    this.solutionService.verifyCountObjectFile(issueId).subscribe(dataObject => {
-      const lengthObjectPermitted = 10 - dataObject.length;
-      if (files.length < lengthObjectPermitted) {
-        this.solutionService.uploadSolutionFile(files, issueId).subscribe((data: any) => {
-          if (data.msg === 'Los archivos se han sido subido exitosamente' && data.length > 0) {
-            alert(data.msg);
-          } else {
-            alert("Solo se permiten archivos jpg o png.");
-            this.fileLength = `No se han subido archivos`;
-          }
-        });
-      } else {
-        alert('Cantidad de archivos superior al limite.');
-        this.fileLength = `No se han subido archivos`;
-      }
-    });
   }
 
   async updateSolution(issueId: string) {
-    if (this.updateSolut.solutionDetail === undefined) {
-      this.updateSolut.solutionDetail = this.dataSource.solutionDetail;
-    }
-
-    if (this.updateSolut.solutionTitle === undefined) {
-      this.updateSolut.solutionTitle = this.dataSource.solutionTitle;
-    }
-
-    if (this.updateSolut.solutionUser === undefined) {
-      this.updateSolut.solutionUser = this.dataSource.solutionUser;
-    }
     if (!this.updateSolutionForm.invalid) {
-      this.solutionService.updateSolution(issueId, this.updateSolut).subscribe(data => {
-        console.log(data);
-        alert(`Solución actualizada exitosamente!`);
-        this.dialogRef.close()
-        this.router.navigate(['/solution/list']);
+      const solutionTitle = this.updateSolutionForm.get('solutionTitle')?.value
+      const solutionDetail = this.updateSolutionForm.get('solutionDetail')?.value
+
+      const updateSolution = {
+        solutionUser: localStorage.getItem('email'),
+        solutionTitle: solutionTitle,
+        solutionDetail: solutionDetail
+      }
+
+      this.solutionService.updateSolution(issueId, updateSolution).subscribe(data => {
+        this.msg = 'Solución actualizada exitosamente!';
+        this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
       })
     }
   }

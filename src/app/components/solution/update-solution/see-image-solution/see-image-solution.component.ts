@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SolutionService } from 'src/app/services/solution/solution.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import SwiperCore, { Navigation, Swiper } from "swiper";
 import { UpdateSolutionComponent } from '../update-solution.component';
 
@@ -14,11 +15,12 @@ SwiperCore.use([Navigation]);
   styleUrls: ['./see-image-solution.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SeeImageSolutionComponent implements OnInit, AfterViewInit {
+export class SeeImageSolutionComponent implements OnInit {
   thumbsSwiper: any;
   slides: any = [];
   fileLength: any;
-  imagen = '../../../../../assets/img/background/back-1.png';
+  msg: string;
+  valid: false;
 
   @ViewChild('galleryTop') galleryTopElement: ElementRef;
   @ViewChild('galleryThumbs') galleryThumbsElement: ElementRef;
@@ -30,24 +32,28 @@ export class SeeImageSolutionComponent implements OnInit, AfterViewInit {
     private solutionService: SolutionService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<SeeImageSolutionComponent>,
-    private dialogRefUpdateSolution: MatDialogRef<UpdateSolutionComponent>,
-    private router: Router,
-
+    private dialog: MatDialog,
   ) { }
 
   async ngOnInit(): Promise<void> {
     this.solutionService.getImageFiles(this.data.issueId).subscribe((response) => {
       this.slides = response;
     });
-  }
-
-
-  ngAfterViewInit() {
-    
+    if(this.data.valid === true) {
+      this.valid = this.data.valid;
+    } 
   }
 
   close() {
     this.dialogRef.close();
+  }
+
+  async openDialog(msg: string) {
+    return {
+      width: '250px',
+      height: '150px',
+      data: { msg }
+    }
   }
 
   onFileSelected(event: any) {
@@ -63,20 +69,18 @@ export class SeeImageSolutionComponent implements OnInit, AfterViewInit {
       if (files.length < lengthObjectPermitted) {
         this.solutionService.uploadSolutionFile(files, this.data.issueId).subscribe((data: any) => {
           if (data.msg === 'Los archivos se han sido subido exitosamente' && data.length > 0) {
-            alert(data.msg);
-            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              this.dialogRef.close();
-
-              this.router.navigate(['/solution/list']);
-            });
+            this.msg = '¡Los archivos se han sido subido exitosamente!'
+            this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
           } else {
-            alert("Solo se permiten archivos jpg o png.");
             this.fileLength = `No se han subido archivos`;
+            this.msg = 'Solo se permiten archivos jpg o png.';
+            this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
           }
         });
       } else {
-        alert('Cantidad de archivos superior al limite.');
         this.fileLength = `No se han subido archivos`;
+        this.msg = 'Cantidad de archivos superior al limite.';
+        this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
       }
     });
   }
