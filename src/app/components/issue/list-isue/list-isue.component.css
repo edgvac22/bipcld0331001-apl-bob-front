@@ -7,8 +7,17 @@ h1 {
     font-size: 2.4em;
 }
 
+p {
+    margin-left: 25px;
+}
+
 table {
     width: 100%;
+}
+
+#search-issue {
+    margin: 0 25px 15px 25px;
+    width: 20%;
 }
 
 .mat-elevation-z8 {
@@ -18,11 +27,4 @@ table {
 
 .title {
     margin: 35px 0 0 25px;
-}
-
-#search-issue {
-    margin: 0 25px 15px 25px;
-}
-p {
-    margin-left: 25px;
 }

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +8,9 @@ import { MsalService } from '@azure/msal-angular';
 })
 export class NavbarComponent {
 
-  constructor(private authService: MsalService) { }
+  constructor(private router: Router) { }
 
   logout() {
-    this.authService.logoutPopup({
-      mainWindowRedirectUri: "/"
-    });
-    localStorage.removeItem('email');
+    this.router.navigate(['/logout']);
   }
-
 }

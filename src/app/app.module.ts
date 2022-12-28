@@ -42,7 +42,8 @@ import { SearchIssueComponent } from './components/issue/search-issue/search-iss
 import { MatSelectModule } from '@angular/material/select';
 import { SeeImageIssueComponent } from './shared/see-image-issue/see-image-issue.component';
 import { DialogComponent } from './shared/dialog/dialog.component';
-import { DeleteSolutionComponent } from './components/solution/delete-solution/delete-solution.component'
+import { DeleteSolutionComponent } from './components/solution/delete-solution/delete-solution.component';
+import { LogoutComponent } from './components/landing-page/logout/logout.component'
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -69,7 +70,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     SearchIssueComponent,
     SeeImageIssueComponent,
     DialogComponent,
-    DeleteSolutionComponent
+    DeleteSolutionComponent,
+    LogoutComponent
   ],
   imports: [
     SwiperModule,
@@ -102,14 +104,14 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
         storeAuthStateInCookie: isIE,
       }
     }), {
-      interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+      interactionType: InteractionType.Redirect,
       authRequest: {
-        scopes: ['user.read']
+        scopes: ['user.read'],
       }
     }, {
-      interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration
+      interactionType: InteractionType.Redirect,
       protectedResourceMap: new Map([
-        ['https://graph.microsoft.com/v1.0/me', ['user.read']]
+        ['https://graph.microsoft.com/v1.0/me', ['user.read']],
       ])
     })
   ],

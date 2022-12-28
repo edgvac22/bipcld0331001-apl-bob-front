@@ -39,8 +39,17 @@ export class ListSolutionComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    const filterWords = filterValue.split(' ');
+    this.dataSource.filterPredicate = (data) => {
+      const solutionTitle = data.solutionTitle.toString().toLowerCase();
+      const solutionDetail = data.solutionDetail.toString().toLowerCase();
+      const area = data.area.toString().toLowerCase();
+      const environment = data.environment.toString().toLowerCase();
+      return filterWords.every(word => solutionTitle.includes(word) || solutionDetail.includes(word)
+        || area.indexOf(filterValue) !== -1 || environment.indexOf(filterValue) !== -1);
+    };
+    this.dataSource.filter = filterValue;
   }
 
   announceSortChange(sortState: Sort) {
