@@ -5,19 +5,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Solution } from 'src/app/models/solution';
 import { AreaService } from 'src/app/services/area/area.service';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
 import { SolutionService } from 'src/app/services/solution/solution.service';
-import { DeleteSolutionComponent } from '../delete-solution/delete-solution.component';
-import { UpdateSolutionComponent } from '../update-solution/update-solution.component';
+import { CreateIssueComponent } from '../../issue/create-issue/create-issue.component';
 
 @Component({
-  selector: 'app-list-solution',
-  templateUrl: './list-solution.component.html',
-  styleUrls: ['./list-solution.component.css']
+  selector: 'app-list-solution-developer',
+  templateUrl: './list-solution-developer.component.html',
+  styleUrls: ['./list-solution-developer.component.css']
 })
-export class ListSolutionComponent implements OnInit {
+export class ListSolutionDeveloperComponent implements OnInit {
   area: any = [];
   environment: any = [];
   displayedColumns: string[] = ['title', 'area', 'environment', 'icons'];
@@ -34,14 +34,14 @@ export class ListSolutionComponent implements OnInit {
   constructor(
     private solutionService: SolutionService,
     private _liveAnnouncer: LiveAnnouncer,
-    private dialog: MatDialog,
+    private router: Router,
     private areaService: AreaService,
     private environmentService: EnvironmentService,
+    private dialog: MatDialog,
     ) { }
 
   ngOnInit(): void {
     this.solutionService.listSolution().subscribe((response) => {
-      console.log(response)
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -64,6 +64,13 @@ export class ListSolutionComponent implements OnInit {
     });
     this.listArea();
     this.listEnvironment();
+  }
+
+  createIssue() {
+    this.dialog.open(CreateIssueComponent, {
+      width: '600px',
+      height: '375px',
+    });
   }
 
   async listArea() {
@@ -124,24 +131,7 @@ export class ListSolutionComponent implements OnInit {
     this.dataSource.filter = '';
   }
 
-  updateSolution(issueId: string): void {
-    this.dialog.open(UpdateSolutionComponent, {
-      width: '800px',
-      height: '715px',
-      data: {
-        issueId: issueId
-      }
-    });
-  }
-
-  removeSolution(issueId: string, solutionId: string) {
-    this.dialog.open(DeleteSolutionComponent, {
-      width: '250px',
-      height: '150px',
-      data: {
-        issueId: issueId,
-        solutionId: solutionId
-      }
-    })
+  detailSolution(solutionId: string): void {
+    this.router.navigate([`solution/${solutionId}`])
   }
 }

@@ -1,3 +1,27 @@
+body {
+    background-color: #f4f4f4;
+    background-image: url("../../../../assets/img/background/login.svg");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 45%;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 1.8em;
+}
+
+p {
+    font-size: 16px;
+    color: #282b2e;
+}
+
+#content {
+    padding: 15px;
+    margin: 0px auto;
+    width: 65%;
+}
+
 #msg {
     margin-top: 15px;
 }

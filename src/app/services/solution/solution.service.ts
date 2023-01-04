@@ -18,13 +18,20 @@ export class SolutionService {
 
     constructor(private http: HttpClient) { }
 
+    httpOptionsWithCache = {
+        headers: new HttpHeaders({ 
+            'Content-Type': 'application/json',
+            'Cache-Control': 'max-age=86400'
+         }),
+    };
+
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
 
     listSolution(): Observable<Solution[]> {
         const ENDPOINT = `${this.API}/solution/list`;
-        return this.http.get<Solution[]>(ENDPOINT, this.httpOptions)
+        return this.http.get<Solution[]>(ENDPOINT, this.httpOptionsWithCache)
             .pipe(map((response: any) => response.data.Items));
     }
 
@@ -43,6 +50,12 @@ export class SolutionService {
     updateSolution(issueId: string, solution: CreateSolution) {
         const ENDPOINT = `${this.API}/solution/${issueId}/update`;
         return this.http.post(ENDPOINT, solution, this.httpOptions)
+            .pipe(map((response) => response));
+    }
+
+    detailSolution(solutionId: string) {
+        const ENDPOINT = `${this.API}/solution/${solutionId}`;
+        return this.http.get(ENDPOINT, this.httpOptions)
             .pipe(map((response) => response));
     }
 

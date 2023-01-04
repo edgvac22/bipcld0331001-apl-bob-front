@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { EndSessionRequest } from '@azure/msal-browser';
 import { environment } from 'src/environments/environment';
@@ -13,7 +12,6 @@ export class LogoutComponent implements OnInit {
 
   constructor(
     private authService: MsalService,
-    private router: Router,
     ) { }
 
   ngOnInit(): void {

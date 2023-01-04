@@ -17,7 +17,7 @@ import { SolutionComponent } from './components/solution/solution.component';
 import { ListIsueComponent } from './components/issue/list-isue/list-isue.component';
 import { MainComponent } from './components/main/main.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -43,7 +43,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { SeeImageIssueComponent } from './shared/see-image-issue/see-image-issue.component';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { DeleteSolutionComponent } from './components/solution/delete-solution/delete-solution.component';
-import { LogoutComponent } from './components/landing-page/logout/logout.component'
+import { LogoutComponent } from './components/landing-page/logout/logout.component';
+import { DetailSolutionComponent } from './components/solution/detail-solution/detail-solution.component';
+import { ListSolutionDeveloperComponent } from './components/solution/list-solution-developer/list-solution-developer.component';
+import { NavbarDeveloperComponent } from './components/landing-page/navbar-developer/navbar-developer.component';
+import { SeeImageDetailComponent } from './components/solution/detail-solution/see-image-detail/see-image-detail.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -71,7 +75,11 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     SeeImageIssueComponent,
     DialogComponent,
     DeleteSolutionComponent,
-    LogoutComponent
+    LogoutComponent,
+    DetailSolutionComponent,
+    ListSolutionDeveloperComponent,
+    NavbarDeveloperComponent,
+    SeeImageDetailComponent
   ],
   imports: [
     SwiperModule,
@@ -121,7 +129,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       useClass: MsalInterceptor,
       multi: true
     },
-    MsalGuard
+    MsalGuard,
+    HttpClient,
   ],
   bootstrap: [AppComponent, MsalRedirectComponent]
 })

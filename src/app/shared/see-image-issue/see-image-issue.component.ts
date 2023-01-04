@@ -1,7 +1,9 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IssueService } from 'src/app/services/issue/issue.service';
-import Swiper from 'swiper';
+import SwiperCore, { FreeMode, Navigation, Thumbs } from 'swiper';
+
+SwiperCore.use([FreeMode, Navigation, Thumbs]);
 
 @Component({
   selector: 'app-see-image-issue',
@@ -13,12 +15,6 @@ export class SeeImageIssueComponent implements OnInit {
   thumbsSwiper: any;
   slides: any = [];
   fileLength: any;
-
-  @ViewChild('galleryTop') galleryTopElement: ElementRef;
-  @ViewChild('galleryThumbs') galleryThumbsElement: ElementRef;
-
-  galleryTop: Swiper;
-  galleryThumbs: Swiper;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,

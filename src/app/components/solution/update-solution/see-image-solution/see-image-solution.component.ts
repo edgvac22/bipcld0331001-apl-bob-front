@@ -1,13 +1,10 @@
-import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
-import SwiperCore, { Navigation, Swiper } from "swiper";
-import { UpdateSolutionComponent } from '../update-solution.component';
+import SwiperCore, { FreeMode, Navigation, Thumbs } from 'swiper';
 
-// install Swiper modules
-SwiperCore.use([Navigation]);
+SwiperCore.use([FreeMode, Navigation, Thumbs]);
 
 @Component({
   selector: 'app-see-image-solution',
@@ -21,12 +18,6 @@ export class SeeImageSolutionComponent implements OnInit {
   fileLength: any;
   msg: string;
   valid: false;
-
-  @ViewChild('galleryTop') galleryTopElement: ElementRef;
-  @ViewChild('galleryThumbs') galleryThumbsElement: ElementRef;
-
-  galleryTop: Swiper;
-  galleryThumbs: Swiper;
 
   constructor(
     private solutionService: SolutionService,

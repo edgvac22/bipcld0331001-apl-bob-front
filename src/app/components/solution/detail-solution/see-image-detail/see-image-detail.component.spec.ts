@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainComponent } from './main.component';
+import { SeeImageDetailComponent } from './see-image-detail.component';
 
-describe('UnauthorizedAccessComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('SeeImageDetailComponent', () => {
+  let component: SeeImageDetailComponent;
+  let fixture: ComponentFixture<SeeImageDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainComponent ]
+      declarations: [ SeeImageDetailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(SeeImageDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -15,6 +15,19 @@ table {
     width: 100%;
 }
 
+#btn-refresh {
+    float: right;
+    margin-right: 25px;
+}
+
+#first-div {
+    align-items: center;
+}
+
+#same {
+    margin-right: 25px;
+}
+
 #search-issue {
     margin: 0 25px 15px 25px;
     width: 20%;
@@ -23,6 +36,11 @@ table {
 .mat-elevation-z8 {
     margin-left: 25px;
     margin-right: 25px;
+}
+
+.mat-icon {
+    font-size: 20px;
+    margin-right: 5px;
 }
 
 .title {

@@ -1,13 +1,13 @@
-import { NavbarComponent } from './navbar.component';
+import { NavbarDeveloperComponent } from './navbar-developer.component';
 import { Router } from '@angular/router';
 
 describe('NavbarComponent', () => {
-  let component: NavbarComponent;
+  let component: NavbarDeveloperComponent;
   let router: Router;
 
   beforeEach(() => {
     router = jasmine.createSpyObj('Router', ['navigate']);
-    component = new NavbarComponent(router);
+    component = new NavbarDeveloperComponent(router);
   });
 
   it('should create', () => {

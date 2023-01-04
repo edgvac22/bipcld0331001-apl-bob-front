@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ListIsueComponent } from './list-isue.component';
+import { ListSolutionDeveloperComponent } from './list-solution-developer.component';
 
-describe('ListIsueComponent', () => {
-  let component: ListIsueComponent;
-  let fixture: ComponentFixture<ListIsueComponent>;
+describe('ListSolutionDeveloperComponent', () => {
+  let component: ListSolutionDeveloperComponent;
+  let fixture: ComponentFixture<ListSolutionDeveloperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListIsueComponent ],
+      declarations: [ ListSolutionDeveloperComponent ],
       imports: [
         HttpClientTestingModule
       ]
@@ -17,7 +17,7 @@ describe('ListIsueComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListIsueComponent);
+    fixture = TestBed.createComponent(ListSolutionDeveloperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

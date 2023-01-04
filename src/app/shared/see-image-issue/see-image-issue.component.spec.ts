@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SeeImageIssueComponent } from './see-image-issue.component';
 
 describe('SeeImageIssueComponent', () => {
@@ -8,7 +8,8 @@ describe('SeeImageIssueComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SeeImageIssueComponent ]
+      declarations: [ SeeImageIssueComponent ],
+      imports: [ HttpClientTestingModule ]
     })
     .compileComponents();
   });

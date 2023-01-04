@@ -1,0 +1,21 @@
+<swiper style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff" [spaceBetween]="10" [navigation]="true"
+    [thumbs]="{ swiper: thumbsSwiper }" class="mySwiper2 gallery-top" id="swipper" *ngIf="valid">
+    <ng-template swiperSlide *ngFor="let slide of slides; index as i">
+        <img [src]="slide" alt="Solución #{{i+1}}" class="swiper-slide-container">
+    </ng-template>
+</swiper>
+
+<swiper (swiper)="thumbsSwiper = $event" [spaceBetween]="10" [slidesPerView]="4" [freeMode]="true"
+  [watchSlidesProgress]="true" class="mySwiper gallery-thumbs" *ngIf="valid">
+  <ng-template swiperSlide *ngFor="let slide of slides; index as i" (click)="thumbsSwiper?.init.slideTo(i)">
+    <img [src]="slide" alt="Solución #{{i+1}}" class="swiper-slide-container">
+  </ng-template>
+</swiper><br *ngIf="valid">
+
+<h1 *ngIf="!valid">
+    No hay adjuntos agregados
+</h1>
+    <button mat-raised-button (click)="close()" class="button-close" type="button">
+        <mat-icon>close</mat-icon>
+        Cerrar
+    </button>

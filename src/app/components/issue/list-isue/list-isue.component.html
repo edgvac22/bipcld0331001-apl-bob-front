@@ -2,12 +2,34 @@
   <app-navbar></app-navbar>
 
   <h1 class="title">Hallazgos por verificar</h1><br>
-  <mat-form-field id="search-issue">
-    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar ahora" class="search-input" #input>
-    <button matSuffix mat-button>
-      <mat-icon>search</mat-icon>
+  
+  <div id="first-div">
+    <mat-form-field id="search-issue">
+       <input matInput placeholder="Buscar por detalle" class="search-input" #input [formControl]="issueDetailFilter"> 
+      <button matSuffix mat-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" id="same">
+      <mat-label>Área de TI</mat-label>
+      <mat-select [formControl]="areaFilter">
+          <mat-option *ngFor="let data of area" [value]="data">{{data}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" class="environment">
+      <mat-label>Ambiente</mat-label>
+      <mat-select [formControl]="environmentFilter">
+          <mat-option *ngFor="let data of environment" [value]="data">{{data}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button type="button" id="btn-refresh" (click)="resetFilter()">
+      <mat-icon>refresh</mat-icon>
+      Reestablecer
     </button>
-  </mat-form-field>
+  </div>
 
   <div class="mat-elevation-z8">
 
@@ -39,20 +61,20 @@
         <mat-header-cell *matHeaderCellDef>Agregar solución</mat-header-cell>
         <mat-cell *matCellDef="let issue">
 
-            <button mat-icon-button color="black" aria-label="See" (click)="createSolution(issue.issueId)">
-                <mat-icon>
-                    add
-                </mat-icon>
-            </button>
+          <button mat-icon-button color="black" aria-label="See" (click)="createSolution(issue.issueId)">
+            <mat-icon>
+              add
+            </mat-icon>
+          </button>
         </mat-cell>
-    </ng-container>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">No hay filtros relacionados con: "{{input.value}}"</td>
       </tr>
-  </mat-table>
+    </mat-table>
     <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5,10,15]" showFirstLastButtons
       aria-label="Select page">
     </mat-paginator>

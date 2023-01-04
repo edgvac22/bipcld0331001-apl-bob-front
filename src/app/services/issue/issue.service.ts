@@ -15,13 +15,20 @@ export class IssueService {
   errorMsg!: string;
   constructor(private http: HttpClient) { }
 
-  httpOptions = {
+  httpOptionsWithCache = {
+    headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Cache-Control': 'max-age=86400'
+     }),
+};
+
+httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
+};
 
   createIssue(issue: CreateIssue) {
     const ENDPOINT = `${this.API}/issue/new`;
-    return this.http.post(ENDPOINT, issue, this.httpOptions)
+    return this.http.post(ENDPOINT, issue, this.httpOptionsWithCache)
       .pipe(map((response) => response));
   }
 

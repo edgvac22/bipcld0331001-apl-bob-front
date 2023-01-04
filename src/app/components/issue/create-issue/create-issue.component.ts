@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateIssue } from 'src/app/models/create-issue';
 import { AreaService } from 'src/app/services/area/area.service';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
 import { IssueService } from 'src/app/services/issue/issue.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-create-issue',
@@ -19,13 +19,14 @@ export class CreateIssueComponent implements OnInit {
   createIssue = new CreateIssue();
   fileLength: any;
   fileId: string;
-  
+  msg: string;
+
   constructor(
     private dialogRef: MatDialogRef<CreateIssueComponent>,
     private areaService: AreaService,
     private environmentService: EnvironmentService,
     private issueService: IssueService,
-    private router: Router,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +43,14 @@ export class CreateIssueComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  async openDialog(msg: string) {
+    return {
+      width: '250px',
+      height: '150px',
+      data: { msg }
+    }
+  }
+
   async save() {
     if (!this.createIssueForm.invalid) {
       if (this.fileId === undefined) {
@@ -51,9 +60,9 @@ export class CreateIssueComponent implements OnInit {
           issueDetail: this.createIssueForm.get('issueDetail').value,
           issueUser: localStorage.getItem('email'),
         }
-        this.issueService.createIssue(this.createIssue).subscribe((response) => {
-          alert("Su hallazgo ha sido creado exitosamente");
-          this.dialogRef.close();
+        this.issueService.createIssue(this.createIssue).subscribe(() => {
+          this.msg = 'Su hallazgo ha sido creado exitosamente';
+          this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
         })
       } else {
         this.createIssue = {
@@ -63,7 +72,7 @@ export class CreateIssueComponent implements OnInit {
           issueUser: localStorage.getItem('email'),
           fileId: this.fileId,
         }
-        this.issueService.createIssue(this.createIssue).subscribe((response) => {
+        this.issueService.createIssue(this.createIssue).subscribe(() => {
           alert("Su hallazgo ha sido creado exitosamente");
           this.dialogRef.close();
         })
@@ -72,19 +81,29 @@ export class CreateIssueComponent implements OnInit {
   }
 
   async listArea() {
-    this.areaService.listArea().subscribe((response) => {
-      for (let element of response) {
-        this.area.push(element.name);
-      }
-    })
+    if (localStorage.getItem('area')) {
+      this.area = JSON.parse(localStorage.getItem('area'));
+    } else {
+      this.areaService.listArea().subscribe((response) => {
+        for (let element of response) {
+          this.area.push(element.name);
+        }
+        localStorage.setItem('area', JSON.stringify(this.area));
+      })
+    }
   }
 
   async listEnvironment() {
-    this.environmentService.listEnvironment().subscribe((response) => {
-      for (let element of response) {
-        this.environment.push(element.name);
-      }
-    })
+    if (localStorage.getItem('environment')) {
+      this.environment = JSON.parse(localStorage.getItem('environment'));
+    } else {
+      this.environmentService.listEnvironment().subscribe((response) => {
+        for (let element of response) {
+          this.environment.push(element.name);
+        }
+        localStorage.setItem('environment', JSON.stringify(this.environment));
+      })
+    }
   }
 
   async onFileSelected(event: any) {

@@ -2,9 +2,13 @@
     <p>Favor iniciar sesión</p>
 </div>
 
-<div *ngIf="loginDisplay">
+<body *ngIf="loginDisplay">
     <app-navbar></app-navbar>
-    <p class="success" id="msg">Login successful!</p>
-    <p class="success">Has entrado correctamente.</p>
-    <button mat-raised-button class="success" (click)="createIssue()"> Crear Hallazgo</button>
-</div>
+    <div id="content">
+        <h1>Bienvenido Experto</h1>
+        <p>Acabas de iniciar sesión a BOB, Base de Conocimiento Banistmo. Aquí podrás ver el listado de Hallazgos creados,
+            brindarle solución a los mismos. A la vez, visualizar, editar y eliminar las distintas Soluciones que esten en
+            nuestra base de conocimientos.
+        </p>
+    </div>
+    </body>

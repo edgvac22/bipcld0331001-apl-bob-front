@@ -7,7 +7,7 @@
 
 <swiper (swiper)="thumbsSwiper = $event" [spaceBetween]="10" [slidesPerView]="4" [freeMode]="true"
     [watchSlidesProgress]="true" class="mySwiper gallery-thumbs" *ngIf="valid">
-    <ng-template swiperSlide *ngFor="let slide of slides; index as i">
+    <ng-template swiperSlide *ngFor="let slide of slides; index as i" (click)="thumbsSwiper?.init.slideTo(i)">
         <img [src]="slide" alt="Solución #{{i+1}}" class="swiper-slide-container">
     </ng-template>
 </swiper><br *ngIf="valid">

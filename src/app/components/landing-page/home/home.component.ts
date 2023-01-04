@@ -5,7 +5,6 @@ import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { CreateIssueComponent } from '../../issue/create-issue/create-issue.component';
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 @Component({
@@ -51,13 +50,6 @@ export class HomeComponent implements OnInit {
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();
-  }
-
-  createIssue() {
-    this.dialog.open(CreateIssueComponent, {
-      width: '600px',
-      height: '375px',
-    });
   }
 
   getProfile() {

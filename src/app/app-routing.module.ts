@@ -7,12 +7,16 @@ import { ListSolutionComponent } from './components/solution/list-solution/list-
 import { NotFoundComponent } from './components/main/not-found/not-found.component';
 import { MsalGuard } from '@azure/msal-angular';
 import { LogoutComponent } from './components/landing-page/logout/logout.component';
+import { ListSolutionDeveloperComponent } from './components/solution/list-solution-developer/list-solution-developer.component';
+import { DetailSolutionComponent } from './components/solution/detail-solution/detail-solution.component';
 
 const isIframe = window !== window.parent && !window.opener;
 
 const routes: Routes = [
   { path: 'issue/list', component: ListIsueComponent },
   { path: 'solution/list', component: ListSolutionComponent },
+  { path: 'solution/list/dev', component: ListSolutionDeveloperComponent },
+  { path: 'solution/:solutionId', component: DetailSolutionComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [MsalGuard]},
   { path: 'logout', component: LogoutComponent },

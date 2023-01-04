@@ -1,6 +1,6 @@
 <body>
-    <app-navbar></app-navbar>
-    <h1 class="title">Soluciones realizadas</h1><br>
+    <app-navbar-developer></app-navbar-developer>
+    <h1 class="title">Soluciones</h1><br>
     <div id="first-div">
         <mat-form-field id="search-solution">
             <input matInput placeholder="Buscar por título de la Solución" class="search-input" #input
@@ -23,6 +23,11 @@
                 <mat-option *ngFor="let data of environment" [value]="data">{{data}}</mat-option>
             </mat-select>
         </mat-form-field>
+
+        <button mat-raised-button type="button" id="btn-refresh" (click)="createIssue()">
+            <mat-icon>add</mat-icon>
+            Crear Hallazgo
+        </button>
 
         <button mat-raised-button type="button" id="btn-refresh" (click)="resetFilter()">
             <mat-icon>refresh</mat-icon>
@@ -60,15 +65,9 @@
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let solution">
 
-                    <button mat-icon-button color="black" aria-label="Edit" (click)="updateSolution(solution.issueId)">
+                    <button mat-icon-button color="black" aria-label="Edit" (click)="detailSolution(solution.solutionId)">
                         <mat-icon>
-                            edit
-                        </mat-icon>
-                    </button>
-
-                    <button mat-icon-button color="black" aria-label="Delete">
-                        <mat-icon (click)="removeSolution(solution.issueId, solution.solutionId)">
-                            delete
+                            visibility
                         </mat-icon>
                     </button>
                 </mat-cell>
