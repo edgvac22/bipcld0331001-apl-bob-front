@@ -15,7 +15,7 @@ export class DeleteSolutionComponent {
   ) { }
 
     delete() {
-      this.solutionService.removeSolution(this.data.issueId).subscribe((response) => {
+      this.solutionService.removeSolution(this.data.issueId).subscribe(() => {
         location.reload();
       });
     }

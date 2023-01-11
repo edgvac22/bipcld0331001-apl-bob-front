@@ -4,13 +4,13 @@ export interface Solution {
     area: string;
     environment: string;
     issueDetail: string;
-    issueAttachment: object;
+    fileId?: string;
     dateCreate: string;
     verify: string;
     solutionId: string;
     solutionUser: string;
     solutionTitle: string;
-    solutionAttachment: object;
+    solutionAttachment?: string;
     solutionDetail: string;
     dateUpdated: string;
 }

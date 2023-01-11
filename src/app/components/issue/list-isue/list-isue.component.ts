@@ -33,8 +33,8 @@ export class ListIsueComponent implements OnInit {
   constructor(
     private issueService: IssueService,
     private dialog: MatDialog,
-    private areaService: AreaService,
-    private environmentService: EnvironmentService,
+    public areaService: AreaService,
+    public environmentService: EnvironmentService,
   ) { }
 
   ngOnInit(): void {

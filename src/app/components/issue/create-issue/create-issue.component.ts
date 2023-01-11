@@ -23,10 +23,10 @@ export class CreateIssueComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<CreateIssueComponent>,
-    private areaService: AreaService,
-    private environmentService: EnvironmentService,
-    private issueService: IssueService,
-    private dialog: MatDialog,
+    public areaService: AreaService,
+    public environmentService: EnvironmentService,
+    public issueService: IssueService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -73,7 +73,10 @@ export class CreateIssueComponent implements OnInit {
           fileId: this.fileId,
         }
         this.issueService.createIssue(this.createIssue).subscribe(() => {
-          alert("Su hallazgo ha sido creado exitosamente");
+          this.msg = 'Su hallazgo ha sido creado exitosamente'
+          this.openDialog(this.msg).then((config) =>
+            this.dialog.open(DialogComponent, config),
+          )
           this.dialogRef.close();
         })
       }
@@ -118,15 +121,24 @@ export class CreateIssueComponent implements OnInit {
       this.issueService.uploadFile(files).subscribe((data: any) => {
         if (data.msg === 'Los archivos se han sido subido exitosamente' && data.length > 0) {
           this.fileId = data.idFile;
-          alert(data.msg);
+          this.msg = data.msg
+          this.openDialog(this.msg).then((config) =>
+            this.dialog.open(DialogComponent, config),
+          )
         } else {
-          alert("Solo se permiten archivos jpg o png.");
           this.fileLength = `No se han subido archivos`;
+          this.msg = 'Solo se permiten archivos jpg o png.'
+          this.openDialog(this.msg).then((config) =>
+            this.dialog.open(DialogComponent, config),
+          )
         }
       });
     } else {
-      alert('Cantidad de archivos superior al limite.');
       this.fileLength = `No se han subido archivos`;
+      this.msg = 'Cantidad de archivos superior al limite.'
+      this.openDialog(this.msg).then((config) =>
+        this.dialog.open(DialogComponent, config),
+      )
     }
   }
 }

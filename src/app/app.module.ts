@@ -38,7 +38,6 @@ import { environment } from '../environments/environment';
 import { SeeImageSolutionComponent } from './components/solution/update-solution/see-image-solution/see-image-solution.component';
 import { SwiperModule } from "swiper/angular";
 import { CreateIssueComponent } from './components/issue/create-issue/create-issue.component';
-import { SearchIssueComponent } from './components/issue/search-issue/search-issue.component';
 import { MatSelectModule } from '@angular/material/select';
 import { SeeImageIssueComponent } from './shared/see-image-issue/see-image-issue.component';
 import { DialogComponent } from './shared/dialog/dialog.component';
@@ -71,7 +70,6 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     LoginComponent,
     SeeImageSolutionComponent,
     CreateIssueComponent,
-    SearchIssueComponent,
     SeeImageIssueComponent,
     DialogComponent,
     DeleteSolutionComponent,

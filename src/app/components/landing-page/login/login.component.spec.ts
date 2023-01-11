@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 
 import { LoginComponent } from './login.component';
+import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -13,6 +14,7 @@ describe('LoginComponent', () => {
   let broadcastService: MsalBroadcastService;
   let msalGuardConfig: MsalGuardConfiguration;
   let msalInstance: PublicClientApplication;
+  let router: Router;
 
   beforeEach((() => {
     TestBed.configureTestingModule({
@@ -59,6 +61,4 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
-
 });

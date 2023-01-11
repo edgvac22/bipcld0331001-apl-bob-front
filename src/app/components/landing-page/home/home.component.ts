@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
@@ -20,7 +19,6 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: MsalService,
     private msalBroadcastService: MsalBroadcastService,
-    private dialog: MatDialog,
     private http: HttpClient
   ) { }
 
@@ -28,19 +26,13 @@ export class HomeComponent implements OnInit {
     this.getProfile();
     this.msalBroadcastService.msalSubject$
       .pipe(
-        filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS),
-      )
-      .subscribe((result: EventMessage) => {
-        console.log(result);
-      });
+        filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS))
 
     this.msalBroadcastService.inProgress$
       .pipe(
         filter((status: InteractionStatus) => status === InteractionStatus.None)
       )
-      .subscribe(() => {
-        this.setLoginDisplay();
-      })
+      .subscribe(() => { this.setLoginDisplay() })
   }
 
   setLoginDisplay() {

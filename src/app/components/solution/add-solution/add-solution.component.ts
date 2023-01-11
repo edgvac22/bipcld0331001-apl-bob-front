@@ -26,8 +26,8 @@ export class AddSolutionComponent implements OnInit {
     private issueService: IssueService,
     private dialogRef: MatDialogRef<AddSolutionComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private solutionService: SolutionService,
-    private dialog: MatDialog,
+    public solutionService: SolutionService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {

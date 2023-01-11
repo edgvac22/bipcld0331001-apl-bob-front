@@ -21,7 +21,7 @@ export class ListSolutionComponent implements OnInit {
   area: any = [];
   environment: any = [];
   displayedColumns: string[] = ['title', 'area', 'environment', 'icons'];
-  dataSource = new MatTableDataSource<Solution>();
+  dataSource: any = new MatTableDataSource<Solution>();
   areaFilter = new FormControl();
   environmentFilter = new FormControl();
   solutionTitleFilter = new FormControl();
@@ -34,14 +34,13 @@ export class ListSolutionComponent implements OnInit {
   constructor(
     private solutionService: SolutionService,
     private _liveAnnouncer: LiveAnnouncer,
-    private dialog: MatDialog,
+    public dialog: MatDialog,
     private areaService: AreaService,
     private environmentService: EnvironmentService,
     ) { }
 
   ngOnInit(): void {
     this.solutionService.listSolution().subscribe((response) => {
-      console.log(response)
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

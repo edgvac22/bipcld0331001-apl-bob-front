@@ -56,7 +56,7 @@ export class SolutionService {
     detailSolution(solutionId: string) {
         const ENDPOINT = `${this.API}/solution/${solutionId}`;
         return this.http.get(ENDPOINT, this.httpOptions)
-            .pipe(map((response) => response));
+            .pipe(map((response: any) => response.data.Items[0]));
     }
 
     uploadSolutionFile(files: FileList, issueId: string) {

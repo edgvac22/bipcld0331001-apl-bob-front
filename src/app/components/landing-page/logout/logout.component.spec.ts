@@ -48,17 +48,12 @@ describe('LogoutComponent', () => {
   });
 
   it('should log the user out and remove the email from local storage', () => {
-    // Arrange
     const request: EndSessionRequest = {
       postLogoutRedirectUri: 'http://localhost:4200/login'
     };
     localStorage.setItem('email', 'user@example.com');
     spyOn(authService, 'logoutRedirect').and.stub();
-
-    // Act
     component.ngOnInit();
-
-    // Assert
     expect(authService.logoutRedirect).toHaveBeenCalledWith(request);
     expect(localStorage.getItem('email')).toBeNull();
   });

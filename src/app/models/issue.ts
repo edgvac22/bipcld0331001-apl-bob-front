@@ -4,7 +4,7 @@ export interface Issue {
     area: string;
     environment: string;
     issueDetail: string;
-    issueAttachment: object;
+    fileId?: string;
     dateCreate: string;
     verify: string;
 }

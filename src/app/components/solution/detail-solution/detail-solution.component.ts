@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { SeeImageDetailComponent } from './see-image-detail/see-image-detail.component';
 
@@ -16,15 +16,19 @@ export class DetailSolutionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private solutionService: SolutionService,
-    private dialog: MatDialog
+    public solutionService: SolutionService,
+    public dialog: MatDialog
   ) {
     this.solutionId = this.route.snapshot.paramMap.get('solutionId')
   }
 
   ngOnInit(): void {
+    this.getInfo();
+  }
+
+  getInfo() {
     this.solutionService.detailSolution(this.solutionId).subscribe((response: any) => {
-      this.dataSource = response.data.Items[0];
+      this.dataSource = response;
     });
   }
 

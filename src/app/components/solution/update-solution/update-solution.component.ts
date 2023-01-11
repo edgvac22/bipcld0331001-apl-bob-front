@@ -25,8 +25,8 @@ export class UpdateSolutionComponent implements OnInit {
   constructor(
     private issueService: IssueService,
     private dialogRef: MatDialogRef<UpdateSolutionComponent>,
-    private solutionService: SolutionService,
-    private dialog: MatDialog,
+    public solutionService: SolutionService,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) { }
 

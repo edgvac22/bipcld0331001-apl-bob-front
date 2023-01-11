@@ -1,25 +1,40 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
+import { DialogComponent } from './dialog.component'
+import { InjectionToken } from '@angular/core'
 
-import { DialogComponent } from './dialog.component';
+export const WINDOW = new InjectionToken('Window')
 
 describe('DialogComponent', () => {
-  let component: DialogComponent;
-  let fixture: ComponentFixture<DialogComponent>;
-
+  let component: DialogComponent
+  let fixture: ComponentFixture<DialogComponent>
+  let reloadFn = () => {
+    window.location.reload()
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [DialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {},
+        },
+      ],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(DialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeTruthy()
+  })
+
+  it("reload page when if statements", () => {
+    component.reload();
   });
-});
+})
