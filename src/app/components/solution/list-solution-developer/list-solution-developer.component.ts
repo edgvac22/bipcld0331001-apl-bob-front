@@ -35,8 +35,8 @@ export class ListSolutionDeveloperComponent implements OnInit {
     private solutionService: SolutionService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
-    private areaService: AreaService,
-    private environmentService: EnvironmentService,
+    public areaService: AreaService,
+    public environmentService: EnvironmentService,
     private dialog: MatDialog,
     ) { }
 

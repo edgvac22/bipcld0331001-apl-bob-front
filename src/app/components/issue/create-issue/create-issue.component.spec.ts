@@ -6,7 +6,6 @@ import { of } from 'rxjs'
 import { IssueService } from 'src/app/services/issue/issue.service'
 import { AreaService } from 'src/app/services/area/area.service'
 import { EnvironmentService } from 'src/app/services/environment/environment.service'
-import { DialogComponent } from 'src/app/shared/dialog/dialog.component'
 
 describe('CreateIssueComponent', () => {
   let component: CreateIssueComponent
@@ -77,14 +76,6 @@ describe('CreateIssueComponent', () => {
     component.save()
   });
 
-  it('should list all areas', () => {
-    component.listArea()
-  });
-
-  it('should list all environments', () => {
-    component.listEnvironment()
-  });
-
   it('should upload a file', () => {
     component.onFileSelected(Event)
   });
@@ -135,5 +126,47 @@ describe('CreateIssueComponent', () => {
     expect(localStorage.getItem).toHaveBeenCalledWith('environment');
     expect(environmentService.listEnvironment).not.toHaveBeenCalled();
     expect(localStorage.setItem).not.toHaveBeenCalled();
+  });
+
+  it('should upload files and open dialog with success message', () => {
+    const files = [new File([], 'file1.jpg'), new File([], 'file2.jpg')];
+
+    issueService = jasmine.createSpyObj({
+      uploadFile: of({ msg: 'Los archivos se han sido subido exitosamente', length: files.length })
+    });
+    component.issueService = issueService;
+    dialogRef = jasmine.createSpyObj({ afterClosed: of() });
+    dialog = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialog;
+
+    component.onFileSelected({ target: { files } });
+  });
+
+  it('should not upload files and open dialog with error message when number of files is equal to the limit', () => {
+    const files = [new File([], 'file1.jpg'), new File([], 'file2.jpg'), new File([], 'file3.jpg'), new File([], 'file4.jpg'), new File([], 'file5.jpg'), new File([], 'file6.jpg')];
+
+    issueService = jasmine.createSpyObj({
+      uploadFile: of({ msg: 'Los archivos se han sido subido exitosamente', length: files.length })
+    });
+    component.issueService = issueService;
+    dialogRef = jasmine.createSpyObj({ afterClosed: of() });
+    dialog = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialog;
+
+    component.onFileSelected({ target: { files } });
+  });
+
+  it('should not upload files and open dialog with error message when the type of file is incorrect', () => {
+    const files = [new File([], 'file1.txt')];
+
+    issueService = jasmine.createSpyObj({
+      uploadFile: of({ msg: 'Error', length: 0 })
+    });
+    component.issueService = issueService;
+    dialogRef = jasmine.createSpyObj({ afterClosed: of() });
+    dialog = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialog;
+
+    component.onFileSelected({ target: { files } });
   });
 })

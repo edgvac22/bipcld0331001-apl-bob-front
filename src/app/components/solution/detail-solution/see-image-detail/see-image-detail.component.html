@@ -11,11 +11,3 @@
     <img [src]="slide" alt="Solución #{{i+1}}" class="swiper-slide-container">
   </ng-template>
 </swiper><br *ngIf="valid">
-
-<h1 *ngIf="!valid">
-    No hay adjuntos agregados
-</h1>
-    <button mat-raised-button (click)="close()" class="button-close" type="button">
-        <mat-icon>close</mat-icon>
-        Cerrar
-    </button>

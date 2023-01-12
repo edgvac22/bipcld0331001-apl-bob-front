@@ -83,4 +83,12 @@ describe('ListIsueComponent', () => {
     expect(environmentService.listEnvironment).not.toHaveBeenCalled();
     expect(localStorage.setItem).not.toHaveBeenCalled();
   });
+
+    it('should reset filter', () => {
+    component.resetFilter();
+    expect(component.input.nativeElement.value).toEqual('');
+    expect(component.areaFilter.value).toEqual('');
+    expect(component.environmentFilter.value).toEqual('');
+    expect(component.dataSource.filter).toEqual('');
+  });
 });

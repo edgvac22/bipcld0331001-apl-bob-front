@@ -23,6 +23,7 @@ describe('HomeComponent', () => {
   let authService: MsalService
   let broadcastService: MsalBroadcastService
   let httpTestingController: HttpTestingController
+  
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -78,6 +79,7 @@ describe('HomeComponent', () => {
       broadcastService,
       TestBed.inject(HttpClient),
     )
+    spyOn(authService.instance, 'getAllAccounts').and.returnValue([]);
   })
 
   it('should create', () => {
@@ -94,4 +96,13 @@ describe('HomeComponent', () => {
     flush();
     fixture.detectChanges();
   }));
+
+  it('should set login display to false if there are no accounts', () => {
+    component.setLoginDisplay();
+    expect(component.loginDisplay).toBeFalsy();
+  });
+
+  it('should call ngOnInit method', () => {
+    component.ngOnInit();
+  });
 })

@@ -41,11 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest).subscribe(() => {
         this.router.navigate(['/home'])
       });
-    } else {
-      this.authService.loginRedirect().subscribe(() => {
-        this.router.navigate(['/login'])
-      });
-    }
+    } 
   }
 
   setLoginDisplay() {

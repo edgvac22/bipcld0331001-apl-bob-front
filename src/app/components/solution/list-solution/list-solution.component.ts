@@ -35,8 +35,8 @@ export class ListSolutionComponent implements OnInit {
     private solutionService: SolutionService,
     private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    private areaService: AreaService,
-    private environmentService: EnvironmentService,
+    public areaService: AreaService,
+    public environmentService: EnvironmentService,
     ) { }
 
   ngOnInit(): void {

@@ -20,7 +20,7 @@ export class ListIsueComponent implements OnInit {
   area: any = [];
   environment: any = [];
   displayedColumns: string[] = ['area', 'environment', 'issueDetail', 'icons'];
-  dataSource: MatTableDataSource<Issue>;
+  dataSource: any = new MatTableDataSource<Issue>();
   areaFilter = new FormControl();
   environmentFilter = new FormControl();
   issueDetailFilter = new FormControl();

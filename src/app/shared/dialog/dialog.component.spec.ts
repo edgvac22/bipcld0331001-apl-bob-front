@@ -8,9 +8,6 @@ export const WINDOW = new InjectionToken('Window')
 describe('DialogComponent', () => {
   let component: DialogComponent
   let fixture: ComponentFixture<DialogComponent>
-  let reloadFn = () => {
-    window.location.reload()
-  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DialogComponent],
@@ -27,6 +24,7 @@ describe('DialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DialogComponent)
     component = fixture.componentInstance
+    component = new DialogComponent('data');
     fixture.detectChanges()
   })
 

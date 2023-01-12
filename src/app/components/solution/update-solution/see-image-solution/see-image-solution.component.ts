@@ -20,10 +20,10 @@ export class SeeImageSolutionComponent implements OnInit {
   valid: false;
 
   constructor(
-    private solutionService: SolutionService,
-    @Inject(MAT_DIALOG_DATA) private data: any,
+    public solutionService: SolutionService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<SeeImageSolutionComponent>,
-    private dialog: MatDialog,
+    public dialog: MatDialog,
   ) { }
 
   async ngOnInit(): Promise<void> {

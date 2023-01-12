@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router'
 import { SolutionService } from 'src/app/services/solution/solution.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { SeeImageDetailComponent } from './see-image-detail/see-image-detail.component';
 
 @Component({
@@ -13,6 +14,7 @@ export class DetailSolutionComponent implements OnInit {
 
   solutionId: string;
   dataSource: any = {};
+  msg: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,18 +34,17 @@ export class DetailSolutionComponent implements OnInit {
     });
   }
 
+  async openDialog(msg: string) {
+    return {
+      width: '250px',
+      height: '150px',
+      data: { msg },
+    }
+  }
+
   getImages(issueId: string) {
     this.solutionService.verifyCountObjectFile(issueId).subscribe(dataObject => {
-      const total = dataObject.length + 1;
-      if (total === 0) {
-        this.dialog.open(SeeImageDetailComponent, {
-          width: '450px',
-          height: '150px',
-          data: {
-            issueId: issueId,
-          }
-        });
-      } else {
+      if (dataObject.length >= 0) {
         this.dialog.open(SeeImageDetailComponent, {
           width: '900px',
           height: '750px',
@@ -52,8 +53,12 @@ export class DetailSolutionComponent implements OnInit {
             valid: true,
           }
         });
+      } else {
+        this.msg = 'Esta Solución no tiene archivos agregados.'
+        this.openDialog(this.msg).then((config) =>
+          this.dialog.open(DialogComponent, config),
+        )
       }
     })
   }
-
 }

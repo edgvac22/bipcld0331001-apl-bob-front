@@ -3,7 +3,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { MatDialogModule, MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { IssueService } from 'src/app/services/issue/issue.service';
-import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { issue } from 'src/app/shared/mocks/issue-data.mock';
 import { SeeImageIssueComponent } from 'src/app/shared/see-image-issue/see-image-issue.component';
 import { SeeImageSolutionComponent } from './see-image-solution/see-image-solution.component';
