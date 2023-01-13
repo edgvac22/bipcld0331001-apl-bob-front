@@ -97,8 +97,8 @@ export class UpdateSolutionComponent implements OnInit {
 
   async updateSolution(issueId: string) {
     if (!this.updateSolutionForm.invalid) {
-      const solutionTitle = this.updateSolutionForm.get('solutionTitle')?.value
-      const solutionDetail = this.updateSolutionForm.get('solutionDetail')?.value
+      const solutionTitle = this.updateSolutionForm.get('solutionTitle')!.value
+      const solutionDetail = this.updateSolutionForm.get('solutionDetail')!.value
 
       const updateSolution = {
         solutionUser: localStorage.getItem('email'),

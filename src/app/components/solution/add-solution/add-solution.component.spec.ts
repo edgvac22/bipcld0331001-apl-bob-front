@@ -1,8 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { IssueService } from 'src/app/services/issue/issue.service';
+import { SolutionService } from 'src/app/services/solution/solution.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { issue } from 'src/app/shared/mocks/issue-data.mock';
 import { SeeImageIssueComponent } from 'src/app/shared/see-image-issue/see-image-issue.component';
 
@@ -12,9 +15,23 @@ describe('AddSolutionComponent', () => {
   let component: AddSolutionComponent;
   let fixture: ComponentFixture<AddSolutionComponent>;
   let issueService: IssueService
+  let addSolutionComponent: AddSolutionComponent
+  let solutionService: SolutionService
+  let dialog: DialogComponent
+  let addSolutionForm: FormGroup
   const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
 
   beforeEach(async () => {
+    solutionService = new SolutionService(null);
+    spyOn(solutionService, 'addSolution').and.returnValue(of({}));
+    dialog = new DialogComponent(null);
+    addSolutionForm = new FormGroup({
+        solutionTitle: new FormControl('testSolutionTitle'),
+        solutionDetail: new FormControl('testSolutionDetail')
+    });
+    addSolutionComponent = new AddSolutionComponent(null, null, null, solutionService, null);
+    addSolutionComponent.addSolutionForm = addSolutionForm;
+    spyOn(localStorage, 'getItem').and.returnValue('test@email.com');
     await TestBed.configureTestingModule({
       declarations: [AddSolutionComponent],
       imports: [HttpClientTestingModule, MatDialogModule],
@@ -56,15 +73,27 @@ describe('AddSolutionComponent', () => {
     expect(component.dataSource).toEqual(issue);
   }));
 
+  it("should add solution", () => {
+    addSolutionComponent.addSolution("testIssueId");
+    expect(solutionService.addSolution).toHaveBeenCalledWith(
+      "testIssueId",
+      {
+        solutionUser: "test@email.com",
+        solutionTitle: "testSolutionTitle",
+        solutionDetail: "testSolutionDetail"
+      }
+    );
+  });
+
   it('should open SeeImageIssueComponent with correct data if fileId is defined', () => {
     const fileId = 'fileId';
 
     const dialogRef = jasmine.createSpyObj({ afterClosed: of() });
-    const dialog = jasmine.createSpyObj({ open: dialogRef });
-    component.dialog = dialog;
+    const dialogSpy = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialogSpy;
 
     component.getImageIssue(fileId);
-    expect(dialog.open).toHaveBeenCalledWith(SeeImageIssueComponent, {
+    expect(dialogSpy.open).toHaveBeenCalledWith(SeeImageIssueComponent, {
       width: '1000px',
       height: '750px',
       data: {
@@ -85,9 +114,9 @@ describe('AddSolutionComponent', () => {
     };
 
     const dialogRef = jasmine.createSpyObj({ afterClosed: of() });
-    const dialog = jasmine.createSpyObj({ open: dialogRef });
+    const dialogSpy = jasmine.createSpyObj({ open: dialogRef });
     spyOn(component, 'openDialog').and.returnValue(Promise.resolve(config));
-    component.dialog = dialog;
+    component.dialog = dialogSpy;
 
     component.getImageIssue(fileId);
     expect(component.openDialog).toHaveBeenCalledWith(msg);
@@ -97,66 +126,66 @@ describe('AddSolutionComponent', () => {
     const files = [new File([], 'file1.jpg'), new File([], 'file2.jpg')];
     const issueId = 'issueId';
 
-    const solutionService = jasmine.createSpyObj({
+    const solutionServiceSpy = jasmine.createSpyObj({
       verifyCountObjectFile: of([{}, {}, {}, {}, {}]),
       uploadSolutionFile: of({ msg: 'Los archivos se han sido subido exitosamente', length: files.length })
     });
-    component.solutionService = solutionService;
+    component.solutionService = solutionServiceSpy;
     const dialogRef = jasmine.createSpyObj({ afterClosed: of() });
-    const dialog = jasmine.createSpyObj({ open: dialogRef });
-    component.dialog = dialog;
+    const dialogSpy = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialogSpy;
 
     component.onFileSelected({ target: { files } }, issueId);
-    expect(solutionService.verifyCountObjectFile).toHaveBeenCalledWith(issueId);
-    expect(solutionService.uploadSolutionFile).toHaveBeenCalledWith(files, issueId);
+    expect(solutionServiceSpy.verifyCountObjectFile).toHaveBeenCalledWith(issueId);
+    expect(solutionServiceSpy.uploadSolutionFile).toHaveBeenCalledWith(files, issueId);
   });
 
   it('should not upload files and open dialog with error message when number of files is equal to the limit', () => {
     const files = [new File([], 'file1.jpg'), new File([], 'file2.jpg'), new File([], 'file3.jpg'), new File([], 'file4.jpg'), new File([], 'file5.jpg'), new File([], 'file6.jpg'), new File([], 'file7.jpg'), new File([], 'file8.jpg'), new File([], 'file9.jpg'), new File([], 'file10.jpg'), new File([], 'file11.jpg')];
     const issueId = 'issueId';
 
-    const solutionService = jasmine.createSpyObj({
+    const solutionServiceSpy = jasmine.createSpyObj({
       verifyCountObjectFile: of([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]),
     });
-    component.solutionService = solutionService;
+    component.solutionService = solutionServiceSpy;
     const dialogRef = jasmine.createSpyObj({ afterClosed: of() });
-    const dialog = jasmine.createSpyObj({ open: dialogRef });
-    component.dialog = dialog;
+    const dialogSpy = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialogSpy;
 
     component.onFileSelected({ target: { files } }, issueId);
-    expect(solutionService.verifyCountObjectFile).toHaveBeenCalledWith(issueId);
+    expect(solutionServiceSpy.verifyCountObjectFile).toHaveBeenCalledWith(issueId);
   });
 
   it('should not upload files and open dialog with error message when the type of file is incorrect', () => {
     const files = [new File([], 'file1.txt')];
     const issueId = 'issueId';
 
-    const solutionService = jasmine.createSpyObj({
+    const solutionServiceSpy = jasmine.createSpyObj({
       verifyCountObjectFile: of([]),
       uploadSolutionFile: of({ msg: 'Error', length: 0 })
     });
-    component.solutionService = solutionService;
+    component.solutionService = solutionServiceSpy;
     const dialogRef = jasmine.createSpyObj({ afterClosed: of() });
-    const dialog = jasmine.createSpyObj({ open: dialogRef });
-    component.dialog = dialog;
+    const dialogSpy = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialogSpy;
 
     component.onFileSelected({ target: { files } }, issueId);
-    expect(solutionService.verifyCountObjectFile).toHaveBeenCalledWith(issueId);
-    expect(solutionService.uploadSolutionFile).toHaveBeenCalledWith(files, issueId);
+    expect(solutionServiceSpy.verifyCountObjectFile).toHaveBeenCalledWith(issueId);
+    expect(solutionServiceSpy.uploadSolutionFile).toHaveBeenCalledWith(files, issueId);
   });
 
   it('should not add a solution and open dialog with error message when form is invalid', () => {
     const issueId = 'issueId';
-    const addSolutionForm = jasmine.createSpyObj({ invalid: true });
-    component.addSolutionForm = addSolutionForm;
-    const solutionService = jasmine.createSpyObj({ addSolution: of({}) });
-    component.solutionService = solutionService;
+    const addSolutionFormSpy = jasmine.createSpyObj({ invalid: true });
+    component.addSolutionForm = addSolutionFormSpy;
+    const solutionServiceSpy = jasmine.createSpyObj({ addSolution: of({}) });
+    component.solutionService = solutionServiceSpy;
     const dialogRef = jasmine.createSpyObj({ afterClosed: of() });
-    const dialog = jasmine.createSpyObj({ open: dialogRef });
-    component.dialog = dialog;
+    const dialogSpy = jasmine.createSpyObj({ open: dialogRef });
+    component.dialog = dialogSpy;
 
     component.addSolution(issueId);
-    expect(solutionService.addSolution).not.toHaveBeenCalled();
-    expect(dialog.open).not.toHaveBeenCalled();
+    expect(solutionServiceSpy.addSolution).not.toHaveBeenCalled();
+    expect(dialogSpy.open).not.toHaveBeenCalled();
   });
 });

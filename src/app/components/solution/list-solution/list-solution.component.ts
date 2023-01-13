@@ -33,7 +33,7 @@ export class ListSolutionComponent implements OnInit {
 
   constructor(
     private solutionService: SolutionService,
-    private _liveAnnouncer: LiveAnnouncer,
+    public _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
     public areaService: AreaService,
     public environmentService: EnvironmentService,

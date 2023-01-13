@@ -4,10 +4,13 @@ import { ListIsueComponent } from './list-isue.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { IssueService } from 'src/app/services/issue/issue.service';
+import { issueData, issues } from 'src/app/shared/mocks/issue-data.mock';
 
 describe('ListIsueComponent', () => {
   let component: ListIsueComponent;
   let fixture: ComponentFixture<ListIsueComponent>;
+  let issueService: IssueService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,6 +27,7 @@ describe('ListIsueComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ListIsueComponent);
     component = fixture.componentInstance;
+    issueService = TestBed.inject(IssueService);
     fixture.detectChanges();
   });
 
@@ -90,5 +94,42 @@ describe('ListIsueComponent', () => {
     expect(component.areaFilter.value).toEqual('');
     expect(component.environmentFilter.value).toEqual('');
     expect(component.dataSource.filter).toEqual('');
+  });
+
+  it('should retrieve solutions', () => {
+    spyOn(issueService, 'listIssue').and.returnValue(of(issues));
+    component.ngOnInit();
+    expect(component.dataSource.data).toEqual(issues);
+  });
+
+  it('should filter solutions by title', () => {
+    spyOn(issueService, 'listIssue').and.returnValue(of(issues));
+    component.ngOnInit();
+    component.issueDetailFilter.setValue('Solution 1');
+    expect(component.dataSource.data.length).toEqual(2);
+    expect(component.dataSource.data[0]).toEqual(issues[0]);
+  });
+
+  it('should filter solutions by area', () => {
+    spyOn(issueService, 'listIssue').and.returnValue(of(issues));
+    component.ngOnInit();
+    component.areaFilter.setValue('Ingenieria de Software');
+    expect(component.dataSource.data.length).toEqual(2);
+    expect(component.dataSource.data[0]).toEqual(issues[0]);
+  });
+
+  it('should filter solutions by environment', () => {
+    spyOn(issueService, 'listIssue').and.returnValue(of(issues));
+    component.ngOnInit();
+    component.environmentFilter.setValue('Desarrollo');
+    expect(component.dataSource.data.length).toEqual(2);
+    expect(component.dataSource.data[0]).toEqual(issues[0]);
+  });
+
+  it('should return true when topFilter is true and issueDetailFound or areaFound or environmentFound are true', () => {
+    let data = issueData;
+    let filter = JSON.stringify({ issueDetail: 'Tengo un', area: 'Ingenieria de Software', environment: 'Desarrollo', topFilter: true });
+    let result = component.customFilterPredicate()(data, filter);
+    expect(result).toBeTruthy();
   });
 });

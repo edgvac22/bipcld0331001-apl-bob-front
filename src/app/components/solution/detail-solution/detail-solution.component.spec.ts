@@ -1,11 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DetailSolutionComponent } from './detail-solution.component';
 import { ActivatedRoute } from '@angular/router';
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { SeeImageDetailComponent } from './see-image-detail/see-image-detail.component';
-import { solution } from 'src/app/shared/mocks/solution-data.mock';
 
 describe('DetailSolutionComponent', () => {
   let component: DetailSolutionComponent;

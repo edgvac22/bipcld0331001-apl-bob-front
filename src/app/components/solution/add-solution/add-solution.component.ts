@@ -54,8 +54,8 @@ export class AddSolutionComponent implements OnInit {
 
   async addSolution(issueId: string) {
     if (!this.addSolutionForm.invalid) {
-      const solutionTitle = this.addSolutionForm.get('solutionTitle')?.value
-      const solutionDetail = this.addSolutionForm.get('solutionDetail')?.value
+      const solutionTitle = this.addSolutionForm.get('solutionTitle')!.value
+      const solutionDetail = this.addSolutionForm.get('solutionDetail')!.value
 
       const createSolution = {
         solutionUser: localStorage.getItem('email'),

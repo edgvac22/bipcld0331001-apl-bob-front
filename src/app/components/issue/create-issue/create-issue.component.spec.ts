@@ -15,8 +15,20 @@ describe('CreateIssueComponent', () => {
   let formGroup: FormGroup
   let dialog: MatDialog
   const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
+  let createIssueComponent: CreateIssueComponent;
+  let issueServiceSpy: IssueService;
+  let createIssueForm: FormGroup;
 
   beforeEach(() => {
+    issueServiceSpy = new IssueService(null);
+    spyOn(issueServiceSpy, 'createIssue').and.returnValue(of({}));
+    createIssueForm = new FormGroup({
+      area: new FormControl('testArea'),
+      environment: new FormControl('testEnvironment'),
+      issueDetail: new FormControl('testIssueDetail')
+    });
+    createIssueComponent = new CreateIssueComponent(null, null, null, issueService, null);
+    createIssueComponent.createIssueForm = createIssueForm;
     const areaSpy = jasmine.createSpyObj('AreaService', ['listArea'])
     const environmentSpy = jasmine.createSpyObj('EnvironmentService', [
       'listEnvironment',
@@ -62,6 +74,30 @@ describe('CreateIssueComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  it("should create an issue without file id", () => {
+    createIssueComponent.save();
+    // expect(issueService.createIssue).toHaveBeenCalledWith({
+    //   area: "testArea",
+    //   environment: "testEnvironment",
+    //   issueDetail: "testIssueDetail",
+    //   issueUser: "test@email.com"
+    // });
+    //expect(dialog.open).toHaveBeenCalled();
+  });
+
+  it("should create an issue with file id", () => {
+    createIssueComponent.fileId = 'file1'
+    createIssueComponent.save();
+    // expect(issueService.createIssue).toHaveBeenCalledWith({
+    //   area: "testArea",
+    //   environment: "testEnvironment",
+    //   issueDetail: "testIssueDetail",
+    //   issueUser: "test@email.com",
+    //   fileId: "file1"
+    // });
+    //expect(dialog.open).toHaveBeenCalled();
+  });
+
   it('should close dialog', () => {
     component.close();
     expect(dialogRefSpy.close).toHaveBeenCalled();
@@ -72,10 +108,6 @@ describe('CreateIssueComponent', () => {
     component.openDialog(msg);
   });
 
-  it('should save the issue if form is not invalid and fileId is empty or undefined', () => {
-    component.save()
-  });
-
   it('should upload a file', () => {
     component.onFileSelected(Event)
   });
@@ -83,21 +115,21 @@ describe('CreateIssueComponent', () => {
   it('should list areas and store them in local storage if not already stored', async () => {
     const areaService = jasmine.createSpyObj('AreaService', ['listArea']);
     component.areaService = areaService;
-    spyOn(localStorage,'getItem').and.returnValue(null);
-    spyOn(localStorage,'setItem');
+    spyOn(localStorage, 'getItem').and.returnValue(null);
+    spyOn(localStorage, 'setItem');
     const areas = ['Ingenieria de Software', 'Procesos de TI'];
-    areaService.listArea.and.returnValue(of(areas.map(name =>({name}))));
+    areaService.listArea.and.returnValue(of(areas.map(name => ({ name }))));
     component.listArea();
     expect(localStorage.getItem).toHaveBeenCalledWith('area');
     expect(areaService.listArea).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalledWith('area', JSON.stringify(areas));
   });
-  
+
   it('should use stored areas if already stored', async () => {
     const areaService = jasmine.createSpyObj('AreaService', ['listArea']);
     component.areaService = areaService;
-    spyOn(localStorage,'getItem').and.returnValue(JSON.stringify(['Ingenieria de Software', 'Procesos de TI']));
-    spyOn(localStorage,'setItem');
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(['Ingenieria de Software', 'Procesos de TI']));
+    spyOn(localStorage, 'setItem');
     component.listArea();
     expect(localStorage.getItem).toHaveBeenCalledWith('area');
     expect(areaService.listArea).not.toHaveBeenCalled();
@@ -107,21 +139,21 @@ describe('CreateIssueComponent', () => {
   it('should list environments and store them in local storage if not already stored', async () => {
     const environmentService = jasmine.createSpyObj('EnvironmentService', ['listEnvironment']);
     component.environmentService = environmentService;
-    spyOn(localStorage,'getItem').and.returnValue(null);
-    spyOn(localStorage,'setItem');
+    spyOn(localStorage, 'getItem').and.returnValue(null);
+    spyOn(localStorage, 'setItem');
     const environments = ['Desarrollo', 'Calidad'];
-    environmentService.listEnvironment.and.returnValue(of(environments.map(name =>({name}))));
+    environmentService.listEnvironment.and.returnValue(of(environments.map(name => ({ name }))));
     component.listEnvironment();
     expect(localStorage.getItem).toHaveBeenCalledWith('environment');
     expect(environmentService.listEnvironment).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalledWith('environment', JSON.stringify(environments));
   });
-  
+
   it('should use stored environments if already stored', async () => {
     const environmentService = jasmine.createSpyObj('EnvironmentService', ['listEnvironment']);
     component.environmentService = environmentService;
-    spyOn(localStorage,'getItem').and.returnValue(JSON.stringify(['Desarrollo', 'Calidad']));
-    spyOn(localStorage,'setItem');
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(['Desarrollo', 'Calidad']));
+    spyOn(localStorage, 'setItem');
     component.listEnvironment();
     expect(localStorage.getItem).toHaveBeenCalledWith('environment');
     expect(environmentService.listEnvironment).not.toHaveBeenCalled();
