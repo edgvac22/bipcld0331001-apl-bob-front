@@ -1,27 +1,32 @@
-# Bipcld0331000AplBobFnt
+# Frontend Base de Conocimiento Banistmo (BOB) - bipcld0331001-apl-bob-front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.0.
+Este es el repositorio del frontend de Base de Conocimiento Banistmo (BOB). Para este se uso Angular, la version 13.0.0.
 
-## Development server
+## Prerrequisitos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- NodeJS v.19.2.0
+- Angular 13
 
-## Code scaffolding
+## Instalación 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+$ npm install
+```
 
-## Build
+```bash
+$ npm run build
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Pruebas unitarias (cobertura)
 
-## Running unit tests
+```
+$ ng test --code-coverage 
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Correr la aplicación
 
-## Running end-to-end tests
+```
+$ ng serve
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+La aplicación corre en: http://localhost:4200

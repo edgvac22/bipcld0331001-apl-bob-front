@@ -76,26 +76,11 @@ describe('CreateIssueComponent', () => {
 
   it("should create an issue without file id", () => {
     createIssueComponent.save();
-    // expect(issueService.createIssue).toHaveBeenCalledWith({
-    //   area: "testArea",
-    //   environment: "testEnvironment",
-    //   issueDetail: "testIssueDetail",
-    //   issueUser: "test@email.com"
-    // });
-    //expect(dialog.open).toHaveBeenCalled();
   });
 
   it("should create an issue with file id", () => {
     createIssueComponent.fileId = 'file1'
     createIssueComponent.save();
-    // expect(issueService.createIssue).toHaveBeenCalledWith({
-    //   area: "testArea",
-    //   environment: "testEnvironment",
-    //   issueDetail: "testIssueDetail",
-    //   issueUser: "test@email.com",
-    //   fileId: "file1"
-    // });
-    //expect(dialog.open).toHaveBeenCalled();
   });
 
   it('should close dialog', () => {
