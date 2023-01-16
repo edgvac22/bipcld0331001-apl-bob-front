@@ -54,6 +54,16 @@ h1 {
   color: #2c2a29;
 }
 
+.button-save{
+    background-color: #FDDA24;
+    color: #2c2a29;
+}
+
+.button-save:hover{
+  background-color: #2c2a29;
+  color: #ffffff;
+}
+
 .space {
     margin-top: 2%;
     text-align: center;
@@ -64,5 +74,9 @@ h1 {
     margin-top: -15px;
     font-size: 12px;
     color: red;
+    margin-bottom: 5px;
+}
+
+.div-errors {
     margin-bottom: 5px;
 }

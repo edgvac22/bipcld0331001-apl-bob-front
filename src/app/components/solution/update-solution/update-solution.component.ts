@@ -49,8 +49,8 @@ export class UpdateSolutionComponent implements OnInit {
       const total = dataObject.length + 1;
       if (total === 0) {
         this.dialog.open(SeeImageSolutionComponent, {
-          width: '450px',
-          height: '150px',
+          width: '600px',
+          height: '125px',
           data: {
             issueId: issueId,
           }
@@ -107,7 +107,7 @@ export class UpdateSolutionComponent implements OnInit {
       }
 
       this.solutionService.updateSolution(issueId, updateSolution).subscribe(data => {
-        this.msg = 'Solución actualizada exitosamente!';
+        this.msg = '¡Su solución ha sido actualizada exitosamente!';
         this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
       })
     }

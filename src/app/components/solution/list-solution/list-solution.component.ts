@@ -126,7 +126,7 @@ export class ListSolutionComponent implements OnInit {
   updateSolution(issueId: string): void {
     this.dialog.open(UpdateSolutionComponent, {
       width: '800px',
-      height: '715px',
+      height: '700px',
       data: {
         issueId: issueId
       }

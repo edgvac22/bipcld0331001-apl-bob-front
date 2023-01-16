@@ -13,8 +13,8 @@ export class DialogComponent {
   ) { }
 
   reload() {
-    if (this.data.msg === 'Solución creada exitosamente!' || this.data.msg === 'Solución actualizada exitosamente!'
-      || this.data.msg === '¡Los archivos se han sido subido exitosamente!') {
+    if (this.data.msg === '¡Su solución ha sido creada exitosamente!' || this.data.msg === '¡Su solución ha sido actualizada exitosamente!'
+      || this.data.msg === '¡Los archivos se han sido subido exitosamente!' || this.data.msg === 'Su hallazgo ha sido creado exitosamente') { 
       location.reload();
     }
   }

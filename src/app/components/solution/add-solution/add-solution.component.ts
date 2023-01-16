@@ -64,7 +64,7 @@ export class AddSolutionComponent implements OnInit {
       }
 
       this.solutionService.addSolution(issueId, createSolution).subscribe(data => {
-        this.msg = 'Solución creada exitosamente!';
+        this.msg = '¡Su solución ha sido creada exitosamente!';
         this.openDialog(this.msg).then(config => this.dialog.open(DialogComponent, config));
       })
     }

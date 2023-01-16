@@ -73,7 +73,7 @@ export class ListIsueComponent implements OnInit {
   createSolution(issueId: string): void {
     this.dialog.open(AddSolutionComponent, {
       width: '800px',
-      height: '650px',
+      height: '635px',
       data: {
         issueId: issueId
       }

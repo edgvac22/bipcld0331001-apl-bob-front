@@ -5,7 +5,7 @@
         <mat-form-field id="mat-form-field" appearance="fill" class="name" id="same">
             <mat-label>Id del Hallazgo</mat-label>
             <input matInput value="{{dataSource.issueId}}" readonly />
-        </mat-form-field><br>
+        </mat-form-field>
 
         <mat-form-field appearance="fill" id="same" class="space-dif">
             <mat-label>Usuario que crea el Hallazgo</mat-label>
@@ -19,7 +19,6 @@
             <mat-label>Área de TI</mat-label>
             <input matInput readonly value="{{dataSource.area}}">
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="fill" class="space-dif" id="same">
             <mat-label>Ambiente</mat-label>
@@ -47,28 +46,27 @@
             <input matInput placeholder="Usuario de la solución" value="{{dataSource.solutionUser}}" readonly>
         </mat-form-field>
 
-        <br>
         <mat-form-field appearance="fill">
             <mat-label>Título de la solución</mat-label>
             <input matInput placeholder="Título de la solución" value="{{dataSource.solutionTitle}}"
                 formControlName="solutionTitle">
         </mat-form-field>
-
-        <div *ngIf="updateSolutionForm.get('solutionTitle').errors" class="text-error">
-            Debes cambiar algún caracter y debe ser superior a 5 caracteres.
+        <div class="div-errors">
+            <div *ngIf="updateSolutionForm.get('solutionTitle').errors" class="text-error">
+                Debes cambiar algún caracter y debe ser superior a 5 caracteres.
+            </div>
         </div>
 
-        <br>
         <mat-form-field appearance="fill">
             <mat-label>Detalle de la solución</mat-label>
             <textarea matInput placeholder="Detalle de solución" value="{{dataSource.solutionDetail}}"
                 formControlName="solutionDetail"></textarea>
         </mat-form-field>
-
-        <div *ngIf="updateSolutionForm.get('solutionDetail').errors" class="text-error">
-            Debes cambiar algún caracter y debe ser superior a 20 caracteres.
+        <div class="div-errors">
+            <div *ngIf="updateSolutionForm.get('solutionDetail').errors" class="text-error">
+                Debes cambiar algún caracter y debe ser superior a 20 caracteres.
+            </div>
         </div>
-
 
         <mat-form-field class="example-full-width" id="mat-form-field" (click)="getImages(dataSource.issueId)">
             <mat-label>Ver adjuntos de la Solución</mat-label>
