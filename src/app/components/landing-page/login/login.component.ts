@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
-import { InteractionStatus, PopupRequest } from '@azure/msal-browser';
+import { InteractionStatus, PopupRequest, RedirectRequest } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -41,7 +41,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest).subscribe(() => {
         this.router.navigate(['/home'])
       });
-    } 
+    //   this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest).subscribe(() => {
+    //     this.router.navigate(['/home']);
+    //   }); 
+    // } else {
+    //   this.router.navigate(['/login']);
+    }
   }
 
   setLoginDisplay() {
