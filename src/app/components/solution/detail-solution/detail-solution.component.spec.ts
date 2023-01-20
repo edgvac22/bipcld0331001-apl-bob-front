@@ -53,7 +53,7 @@ describe('DetailSolutionComponent', () => {
 
     expect(dialog.open).toHaveBeenCalledWith(SeeImageDetailComponent, {
       width: '900px',
-      height: '750px',
+      height: '700px',
       data: {
         issueId: issueId,
         valid: true,

@@ -111,11 +111,7 @@ export class CreateIssueComponent implements OnInit {
 
   async onFileSelected(event: any) {
     const files = event.target.files;
-    this.fileLength = `${files.length} archivos subidos`;
-
-    if (files.length === 1) {
-      this.fileLength = `${this.fileLength} archivo subido`;
-    }
+    this.fileLength = `Archivo(s) subido(s)`;
 
     if (files.length < 6) {
       this.issueService.uploadFile(files).subscribe((data: any) => {

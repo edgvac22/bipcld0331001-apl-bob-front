@@ -47,7 +47,7 @@ export class DetailSolutionComponent implements OnInit {
       if (dataObject.length >= 0) {
         this.dialog.open(SeeImageDetailComponent, {
           width: '900px',
-          height: '750px',
+          height: '700px',
           data: {
             issueId: issueId,
             valid: true,
