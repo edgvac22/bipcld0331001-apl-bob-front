@@ -5,11 +5,13 @@ import { SolutionService } from 'src/app/services/solution/solution.service';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { SeeImageDetailComponent } from './see-image-detail/see-image-detail.component';
+import { UserRoleService } from 'src/app/services/role/user-role.service';
 
 describe('DetailSolutionComponent', () => {
   let component: DetailSolutionComponent;
   let fixture: ComponentFixture<DetailSolutionComponent>;
   let solutionService: SolutionService;
+  let userRoleService: UserRoleService
   let route: ActivatedRoute;
 
   beforeEach((() => {
@@ -19,6 +21,7 @@ describe('DetailSolutionComponent', () => {
         { provide: SolutionService, useValue: jasmine.createSpyObj('SolutionService', ['detailSolution', 'verifyCountObjectFile']) },
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
         { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
+        { provide: UserRoleService, useValue: jasmine.createSpyObj('UserRoleService', ['getGroups']) },
       ]
     })
       .compileComponents();
@@ -28,6 +31,7 @@ describe('DetailSolutionComponent', () => {
     fixture = TestBed.createComponent(DetailSolutionComponent);
     component = fixture.componentInstance;
     solutionService = TestBed.inject(SolutionService);
+    userRoleService = TestBed.inject(UserRoleService);
     route = TestBed.inject(ActivatedRoute);
     component.solutionService = solutionService
   });

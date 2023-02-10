@@ -9,6 +9,7 @@ import { AddSolutionComponent } from '../../solution/add-solution/add-solution.c
 import { AreaService } from 'src/app/services/area/area.service';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
 import { FormControl } from '@angular/forms';
+import { UserRoleService } from '../../../services/role/user-role.service';
 
 @Component({
   selector: 'app-list-isue',
@@ -35,24 +36,26 @@ export class ListIsueComponent implements OnInit {
     private dialog: MatDialog,
     public areaService: AreaService,
     public environmentService: EnvironmentService,
+    public userRoleService: UserRoleService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.userRoleService.getGroups();
     this.issueService.listIssue().subscribe((response) => {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-  
+
       this.areaFilter.valueChanges.subscribe((areaFilterValue) => {
         this.filteredValues['area'] = areaFilterValue;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
       });
-  
+
       this.environmentFilter.valueChanges.subscribe((environmentFilterValue) => {
         this.filteredValues['environment'] = environmentFilterValue;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
       });
-  
+
       this.issueDetailFilter.valueChanges.subscribe((issueDetailFilterValue) => {
         this.filteredValues['issueDetail'] = issueDetailFilterValue;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
@@ -62,7 +65,7 @@ export class ListIsueComponent implements OnInit {
     this.listArea();
     this.listEnvironment();
   }
-  
+
   resetFilter() {
     this.input.nativeElement.value = '';
     this.areaFilter.setValue('');
@@ -107,17 +110,17 @@ export class ListIsueComponent implements OnInit {
   }
 
   customFilterPredicate() {
-    const myFilterPredicate = function(data: Issue, filter: string) : boolean {
-      let searchString = JSON.parse(filter);
+    const myFilterPredicate = function (data: Issue, filterSearch: string): boolean {
+      let searchString = JSON.parse(filterSearch);
       let filterWords = searchString.issueDetail.toLowerCase().split(' ');
       let issueDetail = data.issueDetail.toLowerCase();
-      let issueDetailFound = filterWords.every(word => issueDetail.includes(word));
+      let issueDetailFound = filterWords.every((word: any) => issueDetail.includes(word));
       let areaFound = data.area.toLowerCase().includes(searchString.area.toLowerCase());
       let environmentFound = data.environment.toLowerCase().includes(searchString.environment.toLowerCase());
       if (searchString.topFilter) {
-          return issueDetailFound || areaFound || environmentFound;
+        return issueDetailFound || areaFound || environmentFound;
       } else {
-          return issueDetailFound && areaFound && environmentFound;
+        return issueDetailFound && areaFound && environmentFound;
       }
     }
     return myFilterPredicate;

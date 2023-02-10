@@ -1,4 +1,4 @@
-<body>
+<body *ngIf="userRoleService.isAdmin">
   <app-navbar></app-navbar>
 
   <h1 class="title">Hallazgos por verificar</h1><br>
@@ -79,4 +79,8 @@
       aria-label="Select page">
     </mat-paginator>
   </div>
+</body>
+
+<body *ngIf="userRoleService.isDeveloper">
+  <app-unauthorized-access></app-unauthorized-access>
 </body>

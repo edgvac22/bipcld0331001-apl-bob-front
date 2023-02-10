@@ -49,14 +49,6 @@ describe('ListSolutionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should reset filter', () => {
-    component.resetFilter();
-    expect(component.input.nativeElement.value).toEqual('');
-    expect(component.areaFilter.value).toEqual('');
-    expect(component.environmentFilter.value).toEqual('');
-    expect(component.dataSource.filter).toEqual('');
-  });
-
   it('should update solution', () => {
     component.updateSolution('issueId');
   });

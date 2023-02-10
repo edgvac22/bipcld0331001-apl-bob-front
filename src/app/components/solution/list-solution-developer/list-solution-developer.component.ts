@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Solution } from 'src/app/models/solution';
 import { AreaService } from 'src/app/services/area/area.service';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { UserRoleService } from 'src/app/services/role/user-role.service';
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { CreateIssueComponent } from '../../issue/create-issue/create-issue.component';
 
@@ -38,9 +39,11 @@ export class ListSolutionDeveloperComponent implements OnInit {
     public areaService: AreaService,
     public environmentService: EnvironmentService,
     private dialog: MatDialog,
+    public userRoleService: UserRoleService
     ) { }
 
   ngOnInit(): void {
+    this.userRoleService.getGroups();
     this.solutionService.listSolution().subscribe((response) => {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;

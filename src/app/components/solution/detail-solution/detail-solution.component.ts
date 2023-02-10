@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router'
+import { UserRoleService } from 'src/app/services/role/user-role.service';
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { SeeImageDetailComponent } from './see-image-detail/see-image-detail.component';
@@ -19,12 +20,14 @@ export class DetailSolutionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public solutionService: SolutionService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public userRoleService: UserRoleService,
   ) {
     this.solutionId = this.route.snapshot.paramMap.get('solutionId')
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.userRoleService.getGroups();
     this.getInfo();
   }
 

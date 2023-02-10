@@ -15,5 +15,4 @@ export class NotFoundComponent {
       '_blank'
     )
   }
-
 }

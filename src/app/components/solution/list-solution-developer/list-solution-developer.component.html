@@ -1,4 +1,4 @@
-<body>
+<body *ngIf="userRoleService.isDeveloper">
     <app-navbar-developer></app-navbar-developer>
     <h1 class="title">Soluciones</h1><br>
     <div id="first-div">
@@ -65,7 +65,8 @@
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let solution">
 
-                    <button mat-icon-button color="black" aria-label="Edit" (click)="detailSolution(solution.solutionId)">
+                    <button mat-icon-button color="black" aria-label="Edit"
+                        (click)="detailSolution(solution.solutionId)">
                         <mat-icon>
                             visibility
                         </mat-icon>
@@ -83,4 +84,8 @@
             aria-label="Select page">
         </mat-paginator>
     </div>
+</body>
+
+<body *ngIf="userRoleService.isAdmin">
+    <app-unauthorized-access></app-unauthorized-access>
 </body>

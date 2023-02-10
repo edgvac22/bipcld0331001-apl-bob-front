@@ -1,10 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { IssueService } from 'src/app/services/issue/issue.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution/solution.service';
-import { CreateSolution } from 'src/app/models/create-solution';
 import { SeeImageIssueComponent } from 'src/app/shared/see-image-issue/see-image-issue.component';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 

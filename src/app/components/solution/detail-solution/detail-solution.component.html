@@ -1,4 +1,4 @@
-<body>
+<body *ngIf="userRoleService.isDeveloper">
     <app-navbar-developer></app-navbar-developer>
     <main>
         <div class="container">
@@ -34,4 +34,8 @@
             </mat-form-field>
         </div>
     </main>
+</body>
+
+<body *ngIf="userRoleService.isAdmin">
+    <app-unauthorized-access></app-unauthorized-access>
 </body>

@@ -1,25 +1,25 @@
-<div *ngIf="!loginDisplay" class="success">
-    <p>Favor iniciar sesión</p>
-</div>
-
-<body *ngIf="loginDisplay">
+<body *ngIf="loginDisplay && userRoleService.isAdmin">
     <!-- Experto -->
     <app-navbar></app-navbar>
     <div id="content">
         <h1>Bienvenido Experto</h1>
         <p>Acabas de iniciar sesión a BOB, Base de Conocimiento Banistmo. Aquí podrás ver el listado de Hallazgos
             creados,
-            brindarle solución a los mismos. A la vez, visualizar, editar y eliminar las distintas Soluciones que esten
+            brindarle solución a los mismos. A la vez, visualizar, editar y eliminar las distintas Soluciones que
+            esten
             en
             nuestra base de conocimientos.
         </p>
     </div>
+</body>
 
-    <!-- <app-navbar-developer></app-navbar-developer>
+<body *ngIf="loginDisplay && userRoleService.isDeveloper">
+    <app-navbar-developer></app-navbar-developer>
     <div id="content">
         <h1>Bienvenido Colaborador</h1>
-        <p>Acabas de iniciar sesión a BOB, Base de Conocimiento Banistmo. Aquí podrás ver el listado de Soluciones creadas,
+        <p>Acabas de iniciar sesión a BOB, Base de Conocimiento Banistmo. Aquí podrás ver el listado de Soluciones
+            creadas,
             con su información a detalle, crear Hallazgos que no estén registrados en nuestra aplicación.
         </p>
-    </div> -->
+    </div>
 </body>

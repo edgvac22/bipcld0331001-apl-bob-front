@@ -116,12 +116,14 @@ export class CreateIssueComponent implements OnInit {
     if (files.length < 6) {
       this.issueService.uploadFile(files).subscribe((data: any) => {
         if (data.msg === 'Los archivos se han sido subido exitosamente' && data.length > 0) {
+          console.log(data)
           this.fileId = data.idFile;
           this.msg = data.msg
           this.openDialog(this.msg).then((config) =>
             this.dialog.open(DialogComponent, config),
           )
         } else {
+          console.log(data)
           this.fileLength = `No se han subido archivos`;
           this.msg = 'Solo se permiten archivos jpg o png.'
           this.openDialog(this.msg).then((config) =>

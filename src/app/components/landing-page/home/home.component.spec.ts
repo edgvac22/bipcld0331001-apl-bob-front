@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { HttpClient } from '@angular/common/http'
 import { PublicClientApplication, InteractionType } from '@azure/msal-browser'
 import { OverlayModule } from '@angular/cdk/overlay'
+import { UserRoleService } from 'src/app/services/role/user-role.service'
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me'
 
@@ -23,7 +24,7 @@ describe('HomeComponent', () => {
   let authService: MsalService
   let broadcastService: MsalBroadcastService
   let httpTestingController: HttpTestingController
-  
+  let userRoleService: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -73,11 +74,13 @@ describe('HomeComponent', () => {
     fixture.detectChanges()
     authService = TestBed.inject(MsalService)
     broadcastService = TestBed.inject(MsalBroadcastService)
+    userRoleService = TestBed.inject(UserRoleService)
     httpTestingController = TestBed.inject(HttpTestingController)
     component = new HomeComponent(
       authService,
       broadcastService,
       TestBed.inject(HttpClient),
+      userRoleService,
     )
     spyOn(authService.instance, 'getAllAccounts').and.returnValue([]);
   })

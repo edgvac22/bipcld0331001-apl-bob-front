@@ -4,6 +4,7 @@ import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { UserRoleService } from 'src/app/services/role/user-role.service';
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 @Component({
@@ -19,10 +20,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: MsalService,
     private msalBroadcastService: MsalBroadcastService,
-    private http: HttpClient
+    private http: HttpClient,
+    public userRoleService: UserRoleService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.userRoleService.getGroups();
     this.getProfile();
     this.msalBroadcastService.msalSubject$
       .pipe(

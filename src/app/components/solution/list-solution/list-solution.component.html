@@ -1,4 +1,4 @@
-<body>
+<body *ngIf="userRoleService.isAdmin">
     <app-navbar></app-navbar>
     <h1 class="title">Soluciones realizadas</h1><br>
     <div id="first-div">
@@ -84,4 +84,8 @@
             aria-label="Select page">
         </mat-paginator>
     </div>
+</body>
+
+<body *ngIf="userRoleService.isDeveloper">
+    <app-unauthorized-access></app-unauthorized-access>
 </body>

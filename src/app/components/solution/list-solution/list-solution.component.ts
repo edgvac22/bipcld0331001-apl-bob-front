@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Solution } from 'src/app/models/solution';
 import { AreaService } from 'src/app/services/area/area.service';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { UserRoleService } from 'src/app/services/role/user-role.service';
 import { SolutionService } from 'src/app/services/solution/solution.service';
 import { DeleteSolutionComponent } from '../delete-solution/delete-solution.component';
 import { UpdateSolutionComponent } from '../update-solution/update-solution.component';
@@ -29,7 +30,7 @@ export class ListSolutionComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', { static: false }) input: ElementRef;
 
   constructor(
     private solutionService: SolutionService,
@@ -37,24 +38,26 @@ export class ListSolutionComponent implements OnInit {
     public dialog: MatDialog,
     public areaService: AreaService,
     public environmentService: EnvironmentService,
-    ) { }
+    public userRoleService: UserRoleService
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.userRoleService.getGroups();
     this.solutionService.listSolution().subscribe((response) => {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-  
+
       this.areaFilter.valueChanges.subscribe((areaFilterValue) => {
         this.filteredValues['area'] = areaFilterValue;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
       });
-  
+
       this.environmentFilter.valueChanges.subscribe((environmentFilterValue) => {
         this.filteredValues['environment'] = environmentFilterValue;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
       });
-  
+
       this.solutionTitleFilter.valueChanges.subscribe((solutionTitleFilterValue) => {
         this.filteredValues['solutionTitle'] = solutionTitleFilterValue;
         this.dataSource.filter = JSON.stringify(this.filteredValues);
@@ -92,7 +95,7 @@ export class ListSolutionComponent implements OnInit {
   }
 
   customFilterPredicate() {
-    const myFilterPredicate = function(data: Solution, filter: string) : boolean {
+    const myFilterPredicate = function (data: Solution, filter: string): boolean {
       let searchString = JSON.parse(filter);
       let filterWords = searchString.solutionTitle.toLowerCase().split(' ');
       let solutionTitle = data.solutionTitle.toLowerCase();
@@ -100,9 +103,9 @@ export class ListSolutionComponent implements OnInit {
       let areaFound = data.area.toLowerCase().includes(searchString.area.toLowerCase());
       let environmentFound = data.environment.toLowerCase().includes(searchString.environment.toLowerCase());
       if (searchString.topFilter) {
-          return solutionTitleFound || areaFound || environmentFound;
+        return solutionTitleFound || areaFound || environmentFound;
       } else {
-          return solutionTitleFound && areaFound && environmentFound;
+        return solutionTitleFound && areaFound && environmentFound;
       }
     }
     return myFilterPredicate;

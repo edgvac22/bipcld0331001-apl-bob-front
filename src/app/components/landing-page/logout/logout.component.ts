@@ -20,5 +20,7 @@ export class LogoutComponent implements OnInit {
     };
     this.authService.logoutRedirect(request);
     localStorage.removeItem('email');
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('isDeveloper');
   }
 }

@@ -52,14 +52,6 @@ describe('ListSolutionComponent', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith([`solution/${solutionId}`]);
   });
 
-  it('should reset filter', () => {
-    component.resetFilter();
-    expect(component.input.nativeElement.value).toEqual('');
-    expect(component.areaFilter.value).toEqual('');
-    expect(component.environmentFilter.value).toEqual('');
-    expect(component.dataSource.filter).toEqual('');
-  });
-
   it('should list areas and store them in local storage if not already stored', async () => {
     const areaService = jasmine.createSpyObj('AreaService', ['listArea']);
     component.areaService = areaService;

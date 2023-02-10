@@ -13,10 +13,10 @@ import { DetailSolutionComponent } from './components/solution/detail-solution/d
 const isIframe = window !== window.parent && !window.opener;
 
 const routes: Routes = [
-  { path: 'issue/list', component: ListIsueComponent },
-  { path: 'solution/list', component: ListSolutionComponent },
-  { path: 'solution/list/dev', component: ListSolutionDeveloperComponent },
-  { path: 'solution/:solutionId', component: DetailSolutionComponent },
+  { path: 'issue/list', component: ListIsueComponent, canActivate: [MsalGuard] },
+  { path: 'solution/list', component: ListSolutionComponent, canActivate: [MsalGuard] },
+  { path: 'solution/list/dev', component: ListSolutionDeveloperComponent, canActivate: [MsalGuard] },
+  { path: 'solution/:solutionId', component: DetailSolutionComponent, canActivate: [MsalGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [MsalGuard]},
   { path: 'logout', component: LogoutComponent },
