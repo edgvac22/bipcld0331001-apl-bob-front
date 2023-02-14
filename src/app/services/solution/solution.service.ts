@@ -2,10 +2,10 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment.dev';
 import { Solution } from '../../models/solution';
-import { CreateSolution } from 'src/app/models/create-solution';
-import { CountObjectFile } from 'src/app/models/count-object-file';
+import { CreateSolution } from '../../models/create-solution';
+import { CountObjectFile } from '../../models/count-object-file';
 
 @Injectable({
     providedIn: 'root',

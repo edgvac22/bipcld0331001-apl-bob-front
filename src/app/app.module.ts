@@ -34,7 +34,7 @@ import { UpdateSolutionComponent } from './components/solution/update-solution/u
 import { LoginComponent } from './components/landing-page/login/login.component';
 import { MsalGuard, MsalInterceptor, MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.dev';
 import { SeeImageSolutionComponent } from './components/solution/update-solution/see-image-solution/see-image-solution.component';
 import { SwiperModule } from "swiper/angular";
 import { CreateIssueComponent } from './components/issue/create-issue/create-issue.component';

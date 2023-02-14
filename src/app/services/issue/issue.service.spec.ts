@@ -4,8 +4,8 @@ import {
   } from '@angular/common/http/testing'
   import { TestBed } from '@angular/core/testing'
   import { IssueService } from './issue.service'
-  import { environment } from 'src/environments/environment'
-  import { CreateIssue } from 'src/app/models/create-issue'
+  import { environment } from '../../../environments/environment.dev'
+  import { CreateIssue } from '../../models/create-issue'
   import { issue, issues } from '../../shared/mocks/issue-data.mock'
   
   describe('IssueService', () => {

@@ -4,8 +4,8 @@ import {
   } from '@angular/common/http/testing'
   import { TestBed } from '@angular/core/testing'
   import { EnvironmentService } from './environment.service'
-  import { environment } from 'src/environments/environment'
-  import { Environment } from 'src/app/models/environment'
+  import { environment } from '../../../environments/environment.dev'
+  import { Environment } from '../../models/environment'
   
   describe('AreaService', () => {
     let service: EnvironmentService

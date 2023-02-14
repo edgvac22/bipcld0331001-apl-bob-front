@@ -24,13 +24,13 @@ variables:
   value: 'build'  
 # nombre del script de pruebas unitarias
 - name: unitTestCommand
-  value: 'test:cov' 
+  value: 'test' 
 # js= javascript y tsc= typescript
 - name: appType
   value: 'tsc' 
 # versión que se descargará en el agente temporalmente, si no se agrega valor utiliza la versión por defecto del agente
 - name: versionNode
-  value: '19.2.0' 
+  value: '16.17.1' 
 
 resources:
   repositories:
