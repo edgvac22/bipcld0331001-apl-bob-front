@@ -6,13 +6,13 @@ variables:
   value: 'src' 
 # propiedad de sonarQube para indicar los directorios a excluir en el análisis
 - name: sonarExclusions
-  value: 'node_modules/**,/src/environments/*,/src/assets/*,**/*.spec.ts,/,/src/assets/*,**/*.config.ts'
+  value: 'node_modules/**,**/*.bin, test/**, coverage/**, resources/**, mocks/**,node_modules/**, /**/*.module.ts,/src/environments/*,/src/assets/*,**/*.spec.ts,/,/src/assets/*,**/*.config.ts'
 # propiedad de sonarQube para indicar el directorio donde se encontrara el reporte de cobertura
 - name: sonarCoveragePaths 
   value: 'coverage/lcov.info' 
 # 1=proyecto nuevo en sonarQube y 0=para actualizar una rama nueva del proyecto existente en sonarQube
 - name: sonarCreateMaster
-  value: '0'  
+  value: '1'  
 # Nombre del service connection para tarea de sonarQube
 - name: sonarQubeServiceEndpoint 
   value: 'SonarLts' 
