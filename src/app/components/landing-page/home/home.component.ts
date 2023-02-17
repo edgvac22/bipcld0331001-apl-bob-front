@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
-import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { UserRoleService } from 'src/app/services/role/user-role.service';
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
@@ -15,7 +14,6 @@ const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 export class HomeComponent implements OnInit {
   loginDisplay = false;
-  private readonly _destroying$ = new Subject<void>();
 
   constructor(
     private authService: MsalService,
@@ -40,11 +38,6 @@ export class HomeComponent implements OnInit {
 
   setLoginDisplay() {
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
-  }
-
-  ngOnDestroy(): void {
-    this._destroying$.next(undefined);
-    this._destroying$.complete();
   }
 
   getProfile() {

@@ -16,7 +16,7 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
     const request: EndSessionRequest = {
-      postLogoutRedirectUri: environment.config.postLogoutRedirectUri
+      postLogoutRedirectUri: 'http://localhost:4200/login'
     };
     this.authService.logoutRedirect(request);
     localStorage.removeItem('email');

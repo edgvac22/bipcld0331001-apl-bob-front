@@ -20,7 +20,7 @@ $ npm run build
 ## Pruebas unitarias (cobertura)
 
 ```
-$ ng test --code-coverage 
+$ npm run test
 ```
 
 ## Correr la aplicación

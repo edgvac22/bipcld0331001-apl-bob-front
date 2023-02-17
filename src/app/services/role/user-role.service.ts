@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.dev';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
@@ -16,8 +17,8 @@ export class UserRoleService {
         this.http.get(`${GRAPH_ENDPOINT}/memberOf`)
             .subscribe((groups: any) => {
                 const groupIds = groups.value.map((group: any) => group.id);
-                this.isAdmin = groupIds.includes('2f2f26ca-f3ed-44bd-a449-983149b1b14a');
-                this.isDeveloper = groupIds.includes('cb9f89c1-953a-4f37-a77f-eccc5568ca48');
+                this.isAdmin = groupIds.includes(environment.config.isAdmin);
+                this.isDeveloper = groupIds.includes(environment.config.isDeveloper);
             });
     }
 }
