@@ -4,7 +4,7 @@ Este es el repositorio del frontend de Base de Conocimiento Banistmo (BOB). Para
 
 ## Prerrequisitos
 
-- NodeJS v.19.2.0
+- NodeJS v.18.14.1
 - Angular 13
 
 ## Instalación 

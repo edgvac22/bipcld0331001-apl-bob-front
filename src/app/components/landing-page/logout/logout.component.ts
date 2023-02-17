@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { EndSessionRequest } from '@azure/msal-browser';
-import { environment } from '../../../../environments/environment.dev';
 
 @Component({
   selector: 'app-logout',

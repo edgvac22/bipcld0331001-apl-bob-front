@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
 import { filter } from 'rxjs/operators';
-import { UserRoleService } from 'src/app/services/role/user-role.service';
+import { UserRoleService } from '../../../../app/services/role/user-role.service';
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 @Component({
