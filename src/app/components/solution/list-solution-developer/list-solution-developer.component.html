@@ -39,28 +39,24 @@
 
         <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
-            <!-- Title Column -->
             <ng-container matColumnDef="title">
                 <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title"> Título
                 </mat-header-cell>
                 <mat-cell *matCellDef="let solution"> {{solution.solutionTitle}}</mat-cell>
             </ng-container>
 
-            <!-- Area Column -->
             <ng-container matColumnDef="area">
                 <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by area"> Área de TI
                 </mat-header-cell>
                 <mat-cell *matCellDef="let solution"> {{solution.area}} </mat-cell>
             </ng-container>
 
-            <!-- Environment Column -->
             <ng-container matColumnDef="environment">
                 <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by environment"> Ambiente
                 </mat-header-cell>
                 <mat-cell *matCellDef="let solution"> {{solution.environment}} </mat-cell>
             </ng-container>
 
-            <!-- Icons Column -->
             <ng-container matColumnDef="icons">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let solution">

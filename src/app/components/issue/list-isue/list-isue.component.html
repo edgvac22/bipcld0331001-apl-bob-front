@@ -35,21 +35,18 @@
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
-      <!-- Area Column -->
       <ng-container matColumnDef="area">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Área de TI
         </mat-header-cell>
         <mat-cell *matCellDef="let issue"> {{issue.area}} </mat-cell>
       </ng-container>
 
-      <!-- Environment Column -->
       <ng-container matColumnDef="environment">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Ambiente
         </mat-header-cell>
         <mat-cell *matCellDef="let issue"> {{issue.environment}} </mat-cell>
       </ng-container>
 
-      <!-- IssueDetail Column -->
       <ng-container matColumnDef="issueDetail">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Detalle
         </mat-header-cell>
