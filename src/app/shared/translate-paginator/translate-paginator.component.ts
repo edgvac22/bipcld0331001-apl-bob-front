@@ -5,7 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-translate-paginator',
   templateUrl: './translate-paginator.component.html',
-  styleUrls: ['./translate-paginator.component.css']
 })
 export class TranslatePaginatorComponent {
   decimalPipe = new DecimalPipe(navigator.language);
